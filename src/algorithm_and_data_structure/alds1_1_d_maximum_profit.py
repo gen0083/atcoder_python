@@ -1,3 +1,7 @@
+# 導入問題 P46
+# http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_1_D&lang=jp
+
+
 def do_code():
     num = int(input())
     rate = [int(input()) for i in range(num)]
