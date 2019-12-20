@@ -10,15 +10,15 @@ def main():
     count = 0
     for t in T:
         bottom = 0
-        top = n - 1
-        while 0 <= bottom <= top < n:
+        top = n
+        while bottom < top:
             c = (top + bottom) // 2
             if S[c] == t:
                 count += 1
                 break
             else:
                 if S[c] > t:
-                    top = c - 1
+                    top = c
                 else:
                     bottom = c + 1
     print(count)
