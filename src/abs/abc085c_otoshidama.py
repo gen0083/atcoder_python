@@ -1,14 +1,16 @@
 def do_code():
     num, target = map(int, input().split(" "))
-    a_p = [1, 2, 6, 10]
-    b_p = [1, 5]
-    a = target // 10000
-    b = target % 10000 // 5000
-    c = target % 5000 // 1000
-    default = [0, 0, c]
-    for ai in range(a, 0, -1):
-        sum(a_p)
-    print()
+    flg = False
+    for man in range(num, -1, -1):
+        if flg:
+            break
+        for gosen in range(num - man, -1, -1):
+            if man * 10000 + gosen * 5000 + (num - man - gosen) * 1000 == target:
+                print("%d %d %d" % (man, gosen, num - man - gosen))
+                flg = True
+                break
+    if not flg:
+        print("-1 -1 -1")
 
 
 if __name__ == '__main__':
