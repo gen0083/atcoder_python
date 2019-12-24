@@ -4,4 +4,4 @@ from ${CARET}.${name} import main
 
 class Test(SISOTestCase):
     def test_first_case(self):
-        self.helper("input", "expected\n", main)
+        self.helper("""1""", """1""", main)
