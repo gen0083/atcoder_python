@@ -1,6 +1,7 @@
 # コッホ曲線
 # http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_5_C&lang=jp
 import math
+import numpy as np
 
 
 class Point(object):
@@ -24,46 +25,39 @@ class Point(object):
         return [self, Point(self.x + dx, self.y + dy), Point(end.x - dx, end.y - dy), end]
 
     def __str__(self):
-        return "Point[%f,%f]" % (self.x, self.y)
+        return "%f %f" % (self.x, self.y)
 
 
 def make_koch(start, end, n):
     if n == 0:
-        return [start, end]
+        return
     divided = start.divide(end)
+    make_koch(start, divided[1], n - 1)
+    print(divided[1])
     tri = make_triangle(divided[1], divided[2])
-    points = [divided[0], *tri, divided[3]]
-    ret = [*(make_koch(points[i], points[i + 1], n - 1) for i in range(len(points) - 1))]
-    return ret
+    make_koch(divided[1], tri, n - 1)
+    print(tri)
+    make_koch(tri, divided[2], n - 1)
+    print(divided[2])
+    make_koch(divided[2], end, n - 1)
 
 
 def make_triangle(start, end):
     length = start.subtract(end)
     angle = math.radians(60)
-    if start.x < end.x and start.y == end.y:
-        angle = math.radians(60)
-    elif start.x > end.x and start.y > end.y:
-        angle = math.radians(120)
-    elif start.x < end.x and start.y > end.y:
-        angle = math.radians(180)
-    elif start.x < end.x and start.y == end.y:
-        angle = math.radians(240)
-    elif start.x < end.x and start.y < end.y:
-        angle = math.radians(300)
-    else:
-        angle = math.radians(360)
-    new_point_x = length.x * math.cos(angle) + start.x
-    new_point_y = length.x + math.tan(angle) + start.y
-    return [start, Point(new_point_x, new_point_y), end]
+    new_point_x = length.x * math.cos(angle) - length.y * math.sin(angle) + start.x
+    new_point_y = length.x * math.sin(angle) + length.y * math.cos(angle) + start.y
+    return Point(new_point_x, new_point_y)
 
 
 def main():
     n = int(input())
-    points = make_koch(Point(0, 0), Point(1000, 0), n)
-    for p in points:
-        print("%d %d" % (p.x, p.y))
+    start = Point(0, 0)
+    end = Point(100, 0)
+    print(start)
+    make_koch(Point(0, 0), Point(100, 0), n)
+    print(end)
 
 
 if __name__ == '__main__':
-    # main()
-    print(* make_triangle(Point(0,0), Point(100,0)))
+    main()

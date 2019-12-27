@@ -3,6 +3,10 @@ from algorithm_and_data_structure.alds1_5_c_koch_curve import main
 
 
 class Test(SISOTestCase):
+    """
+    0.0001の誤差は許容されるため、このテストケースには失敗するが提出はOKだった。
+    """
+
     def test_first_case(self):
         self.helper("""1
 """, """0.00000000 0.00000000
