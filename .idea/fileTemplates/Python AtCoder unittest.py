@@ -3,5 +3,11 @@ from ${CARET}.${name} import main
 
 
 class Test(SISOTestCase):
-    def test_first_case(self):
-        self.helper("""1""", """1""", main)
+    def test_main(self):
+        self.helper("""""", """""", main)
+        
+    def test_main2(self):
+        self.helper("""""", """""", main)
+        
+    def test_main3(self):
+        self.helper("""""", """""", main)
