@@ -3,14 +3,15 @@
 
 
 def counting_sort(a, b, k):
-    c = [0] * (k + 1)
-    for j in a:
-        c[j] += 1
-    for i in range(1, k + 1):
-        c[i] = c[i] + c[i - 1]
-    for j in range(len(a) - 1, -1, -1):
-        b[c[a[j]] - 1] = a[j]
-        c[a[j]] -= 1
+    c = {i: 0 for i in range(k + 1)}
+    for i in a:
+        c[i] += 1
+    index = 0
+    # pythonでkeys()はkeyの登録された順番になるので、0から順番に登録してればこれで照準で出力できる
+    for key in c.keys():
+        for vv in range(c[key]):
+            b[index] = key
+            index += 1
 
 
 def main():
