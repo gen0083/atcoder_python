@@ -51,22 +51,7 @@ def main():
     inorder = []
     postorder = []
     root_node = nodes[p[:-1].index(-1)]
-    t = root_node
-    stack = []
-    while t is not None or len(stack) > 0:
-        while t is not None:
-            stack.append(t)
-            preorder.append(t.node_id)
-            t = t.left
-        t = stack.pop()
-        inorder.append(t.node_id)
-        t = t.right
-    # ループで回してpostorderは一筋縄ではいかないっぽい
-    # preorder, inorderは上記でできるが、このやり方ではpostorderには対応できない
-    # rightを根より先に出力するため、巡回している順番で出力できないから
-    # (上記ループでは左に行けるだけ潜って、1つ戻る、そのあと右に、という動きで全部回るから)
-    # traversal(root_node, preorder, inorder, postorder)
-    # 各orderを出力
+    traversal(root_node, preorder, inorder, postorder)
     print("Preorder")
     sys.stdout.write(" ")
     sys.stdout.write(" ".join(map(str, preorder)))
