@@ -72,56 +72,51 @@ def print_tree(root):
 def delete(root, value):
     if root is None:
         return
-    else:
-        if root.value == value:
+    if root.value == value:
+        if root.has_child():
+            p = root.parent
+            if root.left is None:
+                # 子があってleftがNone=rightに子がある
+                if p.left == root:
+                    p.left = root.right
+                    root.right.parent = p
+                else:
+                    p.right = root.right
+                    root.right.parent = p
+            elif root.right is None:
+                # 子があってrightがNone=leftのみに子がある
+                if p.left == root:
+                    p.left = root.left
+                    root.left.parent = p
+                else:
+                    p.right = root.left
+                    root.left.parent = p
+            else:
+                # 子が2つの場合
+                next_node = root.parent
+                stack = []
+                found_value = False
+                while next_node is not None or len(stack) > 0:
+                    while next_node is not None:
+                        stack.append(next_node)
+                        next_node = next_node.left
+                    next_node = stack.pop()
+                    if found_value:
+                        break
+                    if next_node.value == value:
+                        found_value = True
+                    next_node = next_node.right
+                root.value = next_node.value
+                delete(next_node, next_node.value)
+        else:
             if root.parent.left == root:
                 root.parent.left = None
             else:
                 root.parent.right = None
-    stack = []
-    cur = root
-    target_node = None
-    next_node = None
-    found_key = False
-    while cur is not None or len(stack) > 0 and next_node is None:
-        while cur is not None:
-            stack.append(cur)
-            cur = cur.left
-        cur = stack.pop()
-        if found_key:
-            next_node = cur
-        if cur.value == value:
-            target_node = cur
-            found_key = True
-        cur = cur.right
-    if target_node is None:
-        return
-    if target_node.has_child():
-        p = target_node.parent
-        if target_node.left is None:
-            if p.left == target_node:
-                p.left = target_node.right
-                target_node.right.parent = p
-            else:
-                p.right = target_node.right
-                target_node.right.parent = p
-        elif target_node.right is None:
-            if p.left == target_node:
-                p.left = target_node.left
-                target_node.left.parent = p
-            else:
-                p.right = target_node.left
-                target_node.left.parent = p
-        else:
-            # 子が2つの場合
-            target_node.value = next_node.value
-            delete(next_node, next_node.value)
+    elif root.value > value:
+        delete(root.left, value)
     else:
-        p = target_node.parent
-        if p.left == target_node:
-            p.left = None
-        else:
-            p.right = None
+        delete(root.right, value)
 
 
 def main():
