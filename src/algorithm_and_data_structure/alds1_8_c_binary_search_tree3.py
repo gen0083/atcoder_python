@@ -10,6 +10,12 @@ class Node(object):
         self.left = left
         self.right = right
 
+    def has_child(self):
+        return self.left is not None or self.right is not None
+
+    def __str__(self):
+        return "Node(%d)[left=%s, right=%s]" % (self.value, self.left, self.right)
+
 
 # noinspection DuplicatedCode
 def insert(root, value):
@@ -32,16 +38,15 @@ def insert(root, value):
 
 # noinspection DuplicatedCode
 def find(root, value):
-    ret = None
     if root is None:
-        return ret
+        print("no")
+        return
     if root.value == value:
-        ret = root
+        print("yes")
     elif root.value > value:
-        ret = find(root.left, value)
+        find(root.left, value)
     else:
-        ret = find(root.right, value)
-    return ret
+        find(root.right, value)
 
 
 # noinspection DuplicatedCode
@@ -65,44 +70,58 @@ def print_tree(root):
 
 
 def delete(root, value):
-    node = find(root, value)
-    if node is None:
-        # 該当するキー存在しない場合
+    if root is None:
         return
-    p = node.parent
-    use_right = p.left is None or p.left.value != value
-    if node.left is None and node.right is None:
-        # 該当のキーが子を持たない場合
-        if use_right:
-            p.right = None
-        else:
-            p.left = None
-    elif node.left is not None and node.right is not None:
-        # 該当のキーが子を2つ保つ場合
-        r = node.right
-        l = node.left
-        r.right = l
-        r.parent = p
-        if use_right:
-            p.right = r
-        else:
-            p.left = r
     else:
-        # 子が1つの場合
-        if node.left is None:
-            if use_right:
-                p.right = node.right
-                p.right.parent = p
+        if root.value == value:
+            if root.parent.left == root:
+                root.parent.left = None
             else:
-                p.left = node.right
-                p.left.parent = p
+                root.parent.right = None
+    stack = []
+    cur = root
+    target_node = None
+    next_node = None
+    found_key = False
+    while cur is not None or len(stack) > 0 and next_node is None:
+        while cur is not None:
+            stack.append(cur)
+            cur = cur.left
+        cur = stack.pop()
+        if found_key:
+            next_node = cur
+        if cur.value == value:
+            target_node = cur
+            found_key = True
+        cur = cur.right
+    if target_node is None:
+        return
+    if target_node.has_child():
+        p = target_node.parent
+        if target_node.left is None:
+            if p.left == target_node:
+                p.left = target_node.right
+                target_node.right.parent = p
+            else:
+                p.right = target_node.right
+                target_node.right.parent = p
+        elif target_node.right is None:
+            if p.left == target_node:
+                p.left = target_node.left
+                target_node.left.parent = p
+            else:
+                p.right = target_node.left
+                target_node.left.parent = p
         else:
-            if use_right:
-                p.right = node.left
-                p.right.parent = p
-            else:
-                p.left = node.left
-                p.left.parent = p
+            # 子が2つの場合
+            target_node.value = next_node.value
+            delete(next_node, next_node.value)
+    else:
+        p = target_node.parent
+        if p.left == target_node:
+            p.left = None
+        else:
+            p.right = None
 
 
 def main():
@@ -113,26 +132,12 @@ def main():
         if command[0] == "insert":
             root = insert(root, int(command[1]))
         elif command[0] == "find":
-            if find(root, int(command[1])) is None:
-                print("no")
-            else:
-                print("yes")
+            find(root, int(command[1]))
         elif command[0] == "delete":
             delete(root, int(command[1]))
         else:
             print_tree(root)
 
 
-def test():
-    n = node(3)
-    l = node(2, n)
-    n.left = l
-    t = n.left
-    print(n.left)
-    t = none
-    print(n.left)
-
-
 if __name__ == '__main__':
-    # main()
-    test()
+    main()
