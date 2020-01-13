@@ -1,3 +1,6 @@
+# https://atcoder.jp/contests/abc151/tasks/abc151_b
+
+
 def main():
     n, k, m = map(int, input().split(" "))
     total = 0

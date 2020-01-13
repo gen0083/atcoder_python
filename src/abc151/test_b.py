@@ -1,5 +1,5 @@
 from tests.si_so_test_case import SISOTestCase
-from abc151.b import main
+from abc151.b_achieve_the_goal import main
 
 
 class Test(SISOTestCase):

@@ -1,5 +1,5 @@
 from tests.si_so_test_case import SISOTestCase
-from abc151.e import main
+from abc151.e_max_min_sums import main
 
 
 class Test(SISOTestCase):

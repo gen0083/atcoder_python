@@ -1,5 +1,5 @@
 from tests.si_so_test_case import SISOTestCase
-from abc151.c import main
+from abc151.c_welcome_to_atcoder import main
 
 
 class Test(SISOTestCase):

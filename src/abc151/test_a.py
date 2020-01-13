@@ -1,5 +1,5 @@
 from tests.si_so_test_case import SISOTestCase
-from abc151.a import main
+from abc151.a_next_alphabet import main
 
 
 class Test(SISOTestCase):

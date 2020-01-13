@@ -1,5 +1,5 @@
 from tests.si_so_test_case import SISOTestCase
-from abc151.d import main
+from abc151.d_maze_master import main
 
 
 class Test(SISOTestCase):
