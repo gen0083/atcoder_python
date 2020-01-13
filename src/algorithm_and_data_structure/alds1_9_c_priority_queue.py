@@ -1,26 +1,30 @@
 # 優先度付きキュー
 # http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_9_C&lang=jp
 import sys
-from collections import deque
 
 
 def insert(heap, value):
-    heap.appendleft(value)
-    heap[1] = heap[0]
-    max_heapify(heap, 1)
+    # 末尾に追加して、その親との比較で必要があれば入れ替えを行う
+    # 完全ヒープの構築まではする必要はない
+    heap.append(value)
+    i = len(heap) - 1
+    while i > 1:
+        p = i // 2
+        if heap[p] < heap[i]:
+            heap[0] = heap[p]
+            heap[p] = heap[i]
+            heap[i] = heap[0]
+            i = p
+        else:
+            break
 
 
 def extract(heap):
     v = heap[1]
-    heap[1] = heap[0]
-    heap.popleft()
-    satisfy_max_heap(heap)
+    heap[1] = heap[-1]
+    heap.pop()
+    max_heapify(heap, 1)
     return v
-
-
-def satisfy_max_heap(heap):
-    for i in range(len(heap) // 2, 0, -1):
-        max_heapify(heap, i)
 
 
 def max_heapify(heap, root_index):
@@ -40,13 +44,13 @@ def max_heapify(heap, root_index):
 
 
 def main():
-    heap = deque([0])
+    heap = [0]
     while True:
         command = sys.stdin.readline().split(" ")
         if command[0] == "insert":
             insert(heap, int(command[1]))
         elif command[0] == "extract\n":
-            print(str(extract(heap)))
+            print(extract(heap))
         else:
             break
 
