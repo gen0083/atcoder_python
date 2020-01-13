@@ -1,5 +1,5 @@
 from tests.si_so_test_case import SISOTestCase
-from abc150.a import main
+from abc150.a_500yen_coins import main
 
 
 class Test(SISOTestCase):
@@ -12,6 +12,3 @@ class Test(SISOTestCase):
         self.helper("""1 501
 """, """No
 """, main)
-
-    def test_main3(self):
-        self.helper("""""", """""", main)
