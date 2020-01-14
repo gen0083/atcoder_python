@@ -3,7 +3,9 @@
 from collections import deque
 
 
-# TODO: 余裕があったら自前実装もやる、ただあんまり意味ないかもなぁ
+# 自前実装はpriority queueでもタイムアウトで無理だったので気にしないことにする
+# pythonでは標準ライブラリをうまく利用するのが大事らしい
+# アルゴリズムの勉強にはならんかもしれんけど
 def main():
     linked_list = deque()
     num = int(input())
