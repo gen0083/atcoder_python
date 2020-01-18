@@ -16,8 +16,6 @@ def main():
                     dp[j] = prev[j - 1] + 1
                 elif dp[j - 1] > prev[j]:
                     dp[j] = dp[j - 1]
-                else:
-                    dp[j] = prev[j]
         print(dp[-1])
 
 
