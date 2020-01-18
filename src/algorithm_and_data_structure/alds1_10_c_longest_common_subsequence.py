@@ -9,10 +9,8 @@ def main():
         x = sys.stdin.readline().strip()
         y = sys.stdin.readline().strip()
         dp = [[0 for _ in range(len(y) + 1)] for _ in range(len(x) + 1)]
-        for i, cx in enumerate(x):
-            i += 1
-            for j, cy in enumerate(y):
-                j += 1
+        for i, cx in enumerate(x, 1):
+            for j, cy in enumerate(y, 1):
                 if cx == cy:
                     dp[i][j] = dp[i - 1][j - 1] + 1
                 elif dp[i - 1][j] >= dp[i][j - 1]:
