@@ -18,14 +18,17 @@ class Robot(object):
 def main():
     n = int(input())
     robots = [Robot(input().split(" ")) for _ in range(n)]
-    robots.sort(key=lambda robo: robo.low)
-    count = n
-    for i, r in enumerate(robots):
-        for j in range(i + 1, len(robots)):
-            if r.contain(robots[i]):
-                count -= 1
+    robots.sort(key=lambda robo: robo.low, reverse=True)
+    available = []
+    for robo in robots:
+        ok = True
+        for r in available:
+            if r.contain(robo):
+                ok = False
                 break
-    print(count)
+        if ok:
+            available.append(robo)
+    print(len(available))
 
 
 if __name__ == '__main__':
