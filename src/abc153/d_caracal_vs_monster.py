@@ -1,9 +1,10 @@
-from collections import deque
+# https://atcoder.jp/contests/abc153/tasks/abc153_d
 
 
 def main():
     h = int(input())
     count = 0
+    # この単純にそのまま実装したやつだとタイムアウトする
     # queue = deque([h])
     # while len(queue) > 0:
     #     mon = queue.popleft()

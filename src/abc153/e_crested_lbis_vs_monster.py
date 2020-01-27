@@ -1,3 +1,6 @@
+# https://atcoder.jp/contests/abc153/tasks/abc153_e
+
+
 class Magic(object):
     def __init__(self, damage, cost):
         self.damage = damage
@@ -27,7 +30,6 @@ def main():
             if minimum > magic[i].cost:
                 minimum = magic[i].cost
     print(magic[0].cost * base + minimum)
-
 
 
 if __name__ == '__main__':
