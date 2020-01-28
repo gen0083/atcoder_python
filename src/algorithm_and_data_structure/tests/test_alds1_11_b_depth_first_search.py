@@ -43,4 +43,15 @@ class Test(SISOTestCase):
 3 9 12
 4 4 5
 5 3 6
-6 10 11""", main)
+6 10 11
+""", main)
+
+    def test_main4(self):
+        self.helper("""3
+1 1 2
+2 1 3
+3 1 1
+""", """1 1 6
+2 2 5
+3 3 4
+""", main)

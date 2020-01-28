@@ -23,11 +23,18 @@ def main():
                 return_set.add(cur)
             if len(stack) > 0:
                 cur = stack.pop()
+            else:
+                if len(go_set) < n:
+                    for i, line in enumerate(reached_memo, 1):
+                        if line[0] == 0:
+                            cur = i
+                            break
         else:
             stack.append(cur)
             v = data[cur - 1]
             for t in v[-1::-1]:
-                stack.append(t)
+                if t not in go_set:
+                    stack.append(t)
             go_set.add(cur)
             step += 1
             reached_memo[cur - 1][0] = step
