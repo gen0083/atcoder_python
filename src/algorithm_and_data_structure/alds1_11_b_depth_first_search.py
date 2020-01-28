@@ -1,42 +1,39 @@
 # 深さ優先探索
 # http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_11_B&lang=jp
-from collections import deque
 
 
 def main():
     n = int(input())
-    reached_memo = dict()
-    # prepare data
-    data = dict()
-    data_keys = dict()
+    data = [0] * n
+    reached_memo = [[0, 0] for _ in range(n)]
     for _ in range(n):
         i, k, *v = map(int, input().split(" "))
-        if k == 0:
-            v = deque([])
-        data[i] = [i, deque(v)]
-        reached_memo[i] = [0, 0]
-    # depth first search
-    step = 1
-    stack = [data[1]]
-    next_id = data[1][1].popleft()
-    next_node = data[next_id]
-    reached_memo[1][0] = step
-    while len(stack) > 0 and len(next_node[1]) > 0:
-        while len(next_node[1]) > 0:
-            step += 1
-            reached_memo[next_id][0] = step
-            next_id = next_node[1].popleft()
-            stack.append(next_node)
-            next_node = data[next_id]
-        next_node = stack.pop()
-        next_id = next_node[0]
-        if len(next_node[1]) == 0:
-            step += 1
-            reached_memo[next_id][1] = step
+        data[i - 1] = v
+    stack = []
+    go_set = set()
+    return_set = set()
+    cur = 1
+    step = 0
+    while len(go_set) < n or len(return_set) < n:
+        if cur in go_set:
+            # すでに訪問済み
+            if cur not in return_set:
+                step += 1
+                reached_memo[cur - 1][1] = step
+                return_set.add(cur)
+            if len(stack) > 0:
+                cur = stack.pop()
         else:
-            next_id = next_node[1].popleft()
-    for l in reached_memo:
-        print(" ".join(map(str, reached_memo[l])))
+            stack.append(cur)
+            v = data[cur - 1]
+            for t in v[-1::-1]:
+                stack.append(t)
+            go_set.add(cur)
+            step += 1
+            reached_memo[cur - 1][0] = step
+            cur = stack.pop()
+    for i, line in enumerate(reached_memo, 1):
+        print("%d %d %d" % (i, line[0], line[1]))
 
 
 if __name__ == '__main__':
