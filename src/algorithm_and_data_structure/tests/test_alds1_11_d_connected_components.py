@@ -22,3 +22,11 @@ class Test(SISOTestCase):
 yes
 no
 """, main)
+
+    def test_main2(self):
+        with open("alds1_11_d_case22in.txt") as i:
+            with open("alds1_11_d_case22out.txt") as o:
+                input_data = "".join(i.readlines())
+                output_data = "".join(o.readlines())
+                self.helper(input_data, output_data, main)
+

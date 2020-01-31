@@ -12,20 +12,19 @@ def main():
         sns[person].append(friend)
         sns[friend].append(person)
     group = [-1 for _ in range(n)]
-    visited = set()
+    not_visited = set(range(n))
     queue = deque()
     g = 0
-    while len(visited) < n:
-        index = group.index(-1)
-        visited.add(index)
+    while len(not_visited) > 0:
+        index = not_visited.pop()
         group[index] = g
         queue.extend(sns[index])
         while len(queue) > 0:
             count = len(queue)
             for _ in range(count):
                 friend = queue.popleft()
-                if friend not in visited:
-                    visited.add(friend)
+                if friend in not_visited:
+                    not_visited.remove(friend)
                     group[friend] = g
                     queue.extend(sns[friend])
         g += 1
