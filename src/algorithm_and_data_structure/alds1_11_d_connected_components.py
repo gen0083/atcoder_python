@@ -11,23 +11,28 @@ def main():
         person, friend = map(int, sys.stdin.readline().strip().split(" "))
         sns[person].append(friend)
         sns[friend].append(person)
+    group = [-1 for _ in range(n)]
+    visited = set()
+    queue = deque()
+    g = 0
+    while len(visited) < n:
+        index = group.index(-1)
+        visited.add(index)
+        group[index] = g
+        queue.extend(sns[index])
+        while len(queue) > 0:
+            count = len(queue)
+            for _ in range(count):
+                friend = queue.popleft()
+                if friend not in visited:
+                    visited.add(friend)
+                    group[friend] = g
+                    queue.extend(sns[friend])
+        g += 1
     q = int(input())
     for _ in range(q):
         s, t = map(int, sys.stdin.readline().strip().split(" "))
-        visited = {s}
-        queue = deque(sns[s])
-        reachable = False
-        while len(queue) > 0 and not reachable:
-            count = len(queue)
-            for _ in range(count):
-                to = queue.popleft()
-                if to == t:
-                    reachable = True
-                    break
-                if to not in visited:
-                    queue.extend(sns[to])
-                    visited.add(to)
-        if reachable:
+        if group[s] == group[t]:
             print("yes")
         else:
             print("no")
