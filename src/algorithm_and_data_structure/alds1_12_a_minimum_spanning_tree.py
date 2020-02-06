@@ -5,31 +5,23 @@ import heapq
 
 def main():
     n = int(input())
-    data = [[] for _ in range(n)]
-    minimum = (float("inf"), 0, 0)
-    for f in range(n):
-        line = map(int, input().split(" "))
-        for t, p in enumerate(line):
-            if p > -1:
-                heapq.heappush(data[f], (p, t))
-                if minimum[0] > p:
-                    minimum = (p, f)
-    visited = set()
-    stack = []
-    c = minimum[1]
+    data = [list(map(int, input().lstrip().split(" "))) for _ in range(n)]
+    visited = {0}
     total = 0
-    while len(stack) > 0 or len(visited) < n:
-        array = data[c]
-        stack.append(c)
-        if len(array) <= 0:
-            while len(array) <= 0 and len(stack) > 0:
-                s = stack.pop()
-                array = data[s]
-        p, t = heapq.heappop(array)
-        if c not in visited:
-            total += p
-            visited.add(c)
-            c = t
+    while len(visited) < n:
+        min_cost = float("inf")
+        target = 0
+        for i in visited:
+            for j in range(n):
+                if j in visited:
+                    continue
+                if data[i][j] == -1:
+                    continue
+                if min_cost > data[i][j]:
+                    min_cost = data[i][j]
+                    target = j
+        total += min_cost
+        visited.add(target)
     print(total)
 
 
