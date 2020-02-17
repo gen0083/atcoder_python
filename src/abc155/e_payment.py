@@ -1,4 +1,5 @@
 # https://atcoder.jp/contests/abc155/tasks/abc155_e
+# TODO: DP使ってやるらしいけどいまいちピンとこない　https://www.youtube.com/watch?v=SG60Cp9pSog&feature=youtu.be
 
 
 def main():
