@@ -17,3 +17,12 @@ class Test(SISOTestCase):
         self.helper("""314159265358979323846264338327950288419716939937551058209749445923078164062862089986280348253421170
 """, """243
 """, main)
+
+    def test_main4(self):
+        self.helper("78995", "10\n", main)
+
+    def test_main5(self):
+        self.helper("557490", "18\n", main)
+
+    def test_main6(self):
+        self.helper("3755105", "21\n", main)
