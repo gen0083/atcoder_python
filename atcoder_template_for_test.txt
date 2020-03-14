@@ -1,5 +1,5 @@
 from tests.si_so_test_case import SISOTestCase
-from ${contest_name}. import main
+from ${contest_name}.${target_file} import main
 
 
 class Test(SISOTestCase):

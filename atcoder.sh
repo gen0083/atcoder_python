@@ -18,17 +18,18 @@ function make_source() {
   local file_name="$target_dir/$1.py"
   echo "$file_name"
   while IFS= read -r line; do
-    echo "$line" >> "$file_name"
+    echo "$line" >>"$file_name"
   done <"$template_for_source"
   return 0
 }
 
 function make_test() {
   local file_name="$target_dir/test_$1.py"
+  target_file="$1"
   echo "$file_name"
   while IFS= read -r line; do
-    eval "echo \"${line}\"" >> "$file_name"
-  done < "$template_for_test"
+    eval "echo \"${line}\"" >>"$file_name"
+  done <"$template_for_test"
 }
 
 if [ $# -ne 1 ]; then
