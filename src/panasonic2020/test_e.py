@@ -1,4 +1,4 @@
-from panasonic2020. import main
+from panasonic2020.e import main
 
 from tests.si_so_test_case import SISOTestCase
 
