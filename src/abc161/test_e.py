@@ -19,8 +19,7 @@ ooxoo
     def test_main3(self):
         self.helper("""5 1 0
 ooooo
-""", """
-""", main)
+""", """""", main)
 
     def test_main4(self):
         self.helper("""16 4 3
