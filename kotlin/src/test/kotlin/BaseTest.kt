@@ -22,8 +22,28 @@ abstract class BaseTest {
             ByteArrayOutputStream().use { out ->
                 System.setIn(input)
                 System.setOut(PrintStream(out))
-                
+    
                 callTestTarget()
+                out.toString() shouldBe data.expected
+            }
+        }
+    }
+}
+
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+abstract class TestBase {
+    
+    abstract val testData: List<TestData>
+    
+    private fun generateTestData() = testData
+    
+    fun intoBox(data: TestData, testTarget: () -> Unit) {
+        ByteArrayInputStream(data.input.toByteArray()).use { input ->
+            ByteArrayOutputStream().use { out ->
+                System.setIn(input)
+                System.setOut(PrintStream(out))
+                
+                testTarget()
                 out.toString() shouldBe data.expected
             }
         }
