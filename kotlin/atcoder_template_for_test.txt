@@ -1,0 +1,9 @@
+class ${contest_test_name} : BaseTest() {
+    override val testData: List<TestData> = listOf(
+        TestData(\"\", \"\")
+    )
+
+    override fun callTestTarget() {
+        ${contest_file_name}()
+    }
+}
