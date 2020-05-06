@@ -9,6 +9,7 @@
 #    +- a.py ... f.py
 #    +- test_a.py ... test_f.py
 set -eu
+cd "$(dirname $0)"
 base_dir="src/"
 array=("a" "b" "c" "d" "e" "f")
 template_for_source="atcoder_template.txt"
