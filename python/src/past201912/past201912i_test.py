@@ -1,0 +1,38 @@
+from past201912.past201912i import main
+from tests.si_so_test_case import SISOTestCase
+
+
+class Test(SISOTestCase):
+    def test_main(self):
+        self.helper("""3 4
+YYY 100
+YYN 20
+YNY 10
+NYY 25""", """30
+""", main)
+
+    def test_main2(self):
+        self.helper("""5 4
+YNNNN 10
+NYNNN 10
+NNYNN 10
+NNNYN 10""", """-1
+""", main)
+
+    def test_main3(self):
+        self.helper("""10 14
+YNNYNNNYYN 774472905
+YYNNNNNYYY 75967554
+NNNNNNNNNN 829389188
+NNNNYYNNNN 157257407
+YNNYNNYNNN 233604939
+NYYNNNNNYY 40099278
+NNNNYNNNNN 599672237
+NNNYNNNNYY 511018842
+NNNYNNYNYN 883299962
+NNNNNNNNYN 883093359
+NNNNNYNYNY 54742561
+NYNNYYYNNY 386272705
+NNNNYYNNNN 565075143
+NNYNYNNNYN 123300589""", """451747367
+""", main)
