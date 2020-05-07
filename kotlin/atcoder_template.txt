@@ -1,3 +1,5 @@
+//
+
 fun main() {
     ${contest_file_name}()
 }
