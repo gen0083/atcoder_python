@@ -1,3 +1,5 @@
+// https://atcoder.jp/contests/abc166/tasks/abc166_e
+
 fun main() {
     abc166e()
 }
@@ -5,7 +7,6 @@ fun main() {
 fun abc166e() {
     val n = readLine()!!.toInt()
     val height = readLine()!!.split(" ").map { it.toInt() }
-    val m = height.withIndex().map { (i, e) -> i to e - i }
     var count = 0
     //    for (i in 0 until n) {
     //        var sa = height[i]
@@ -16,8 +17,15 @@ fun abc166e() {
     //            sa++
     //        }
     //    }
-    m.filter { it.second < 0 }.forEach { (i, e) ->
-        count += m.count { it.second == -e }
+    val mj = mutableMapOf<Int, Int>()
+    val mi = height.mapIndexed { i, e ->
+        val sa = i - e
+        val c = mj.getOrDefault(sa, 0) + 1
+        mj[sa] = c
+        i + e
+    }
+    for (e in mi) {
+        count += mj.getOrDefault(e, 0)
     }
     println(count)
 }
