@@ -1,20 +1,38 @@
 # https://atcoder.jp/contests/abc150/tasks/abc150_d
-# TODO: try
 
 
 def main():
     n, m = map(int, input().split(" "))
-    array = {int(s) for s in input().split(" ")}
-    count = 0
-    for i in range(m, 0, -1):
-        has = 0
-        for j in range(1, n + 1):
-            for s in array:
-                if s % (j + 0.5) == 0:
-                    has += 1
-        if has == 3:
-            count += 1
+    a = [int(s) for s in input().split(" ")]
+    kou = 1
+    # 最小公倍数を求める方法が間違ってる
+    for i in a:
+        j = i // 2
+        kou = lcm(kou, j)
+    count = m // kou
+    if count % 2 == 0:
+        count //= 2
+    else:
+        count = count // 2 + 1
     print(count)
+
+
+def lcm(n, m):
+    g = gcd(n, m)
+    return (n * m) // g
+
+
+def gcd(n, m):
+    if n == m:
+        return n
+    i = max(n, m)
+    j = min(n, m)
+    p = i % j
+    while p != 0:
+        i = j
+        j = p
+        p = i % j
+    return j
 
 
 if __name__ == '__main__':

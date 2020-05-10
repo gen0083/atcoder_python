@@ -1,4 +1,4 @@
-from abc150.d_semi_common_multiple import main
+from abc150.d_semi_common_multiple import *
 from tests.si_so_test_case import SISOTestCase
 
 
@@ -20,3 +20,12 @@ class Test(SISOTestCase):
 6 6 2 6 2
 """, """166666667
 """, main)
+
+    def test_main4(self):
+        self.helper("""4 1000
+4 16 64 256
+""", """
+""", main)
+
+    def test_lcm1(self):
+        self.assertEqual(lcm(10, 6), 15)
