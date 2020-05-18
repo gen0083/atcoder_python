@@ -11,7 +11,7 @@ fun main() {
 
 fun abc168c() {
     val (a, b, h, m) = readLine()!!.split(" ").map { it.toDouble() }
-    val deltaA = 30 * h + m / 2
+    val deltaA = 30 * h + m * 0.5
     val deltaB = 6 * m
     val delta = abs(deltaA - deltaB)
     val rad = delta * PI / 180.0
