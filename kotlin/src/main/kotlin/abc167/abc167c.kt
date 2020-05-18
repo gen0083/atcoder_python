@@ -30,7 +30,7 @@ fun abc167c() {
     }
 }
 
-fun generatePattern(data: List<Book>, result: MutableList<Book>, current: Book,
+private fun generatePattern(data: List<Book>, result: MutableList<Book>, current: Book,
     num: Int, x: Int) {
     if (num == data.size) {
         val ng = current.experience.filter { it < x }
