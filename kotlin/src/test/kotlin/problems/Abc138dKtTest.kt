@@ -23,7 +23,13 @@ class Abc138dKtTest : BaseTest() {
 2 3
 1 10
 2 5
-""", "10 15 10")
+""", "10 15 10"),
+            TestData("200000 2\n" + buildString {
+                for (i in 1 until 200000) {
+                    append("$i ${i + 1}\n")
+                }
+                append("1 5\n200000 1")
+            }, "1 ")
         )
     
     override fun callTestTarget() {
