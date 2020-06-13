@@ -24,7 +24,7 @@ abstract class BaseTest {
                 System.setOut(PrintStream(out))
     
                 callTestTarget()
-                out.toString().strip() shouldBe data.expected.strip()
+                out.toString().trim() shouldBe data.expected.trim()
             }
         }
     }
@@ -44,7 +44,7 @@ abstract class TestBase {
                 System.setOut(PrintStream(out))
                 
                 testTarget()
-                out.toString().strip() shouldBe data.expected.strip()
+                out.toString().trim() shouldBe data.expected.trim()
             }
         }
     }
