@@ -13,10 +13,16 @@ def main():
     #         b += n - j
     #     total += b - a + 1
     # print(total)
-    total = 0
-    for i in range(k, n + 2):
-        total += 2 * n - 2 * i + 1
-    print(total)
+    max_num = sum(range(n - k + 1, n + 1))
+    min_num = sum(range(k))
+    c = max_num - min_num + 1
+    total = c
+    for i in range(k, n + 1):
+        max_num += n - i
+        min_num += i
+        c = max_num - min_num + 1
+        total += c
+    print(total % 1000000007)
 
 
 if __name__ == '__main__':
