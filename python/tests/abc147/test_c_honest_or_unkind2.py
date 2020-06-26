@@ -11,3 +11,6 @@ class Test(SISOTestCase):
 
     def test_third_case(self):
         self.helper("2\n1\n2 0\n1\n1 0\n", "1\n", do_code)
+
+    def test_fourth_case(self):
+        self.helper("4\n1\n2 1\n2\n1 0\n3 1\n1\n1 1\n0\n", "1\n", do_code)
