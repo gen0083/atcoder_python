@@ -1,43 +1,69 @@
 # https://atcoder.jp/contests/abc151/tasks/abc151_d
 # TODO: try
 import sys
-
-
-def update_cost(area, possible, i, j, cost):
-    if area[i][j] == "#":
-        return False
-    if possible[i][j] < cost:
-        possible[i][j] = cost
-        return True
-
-
-def move_cost(area, possible, cost, i, j, h, w):
-    move_candidate = area[:]
-    move_candidate[i][j] = "#"
-    cost += 1
-    if i < h - 2:
-        if update_cost(area, possible, i + 1, j, cost):
-            move_cost(move_candidate, possible, cost, i + 1, j, h, w)
-    if h > i > 1:
-        if update_cost(area, possible, i - 1, j, cost):
-            move_cost(move_candidate, possible, cost, i - 1, j, h, w)
-    if j < w - 2:
-        if update_cost(area, possible, i, j + 1, cost):
-            move_cost(move_candidate, possible, cost, i, j + 1, h, w)
-    if w > j > 1:
-        if update_cost(area, possible, i, j - 1, cost):
-            move_cost(move_candidate, possible, cost, i, j - 1, h, w)
+from collections import deque
 
 
 def main():
     h, w = map(int, sys.stdin.readline().split())
     area = [[s for s in sys.stdin.readline().strip()] for _ in range(h)]
-    possible = [[0] * w] * h
+    start_point = {0: set(), 1: set(), 2: set(), 3: set(), 4: set()}
+    min_neighbor = 4
     for i in range(h):
         for j in range(w):
-            move_cost(area, possible, 1, i, j, h, w)
-    print(area)
-    print(possible)
+            if area[i][j] == "#":
+                continue
+            roads = 0
+            # 上
+            if i > 0 and area[i - 1][j] == ".":
+                roads += 1
+            # 下
+            if i < h - 1 and area[i + 1][j] == ".":
+                roads += 1
+            # 左
+            if j > 0 and area[i][j - 1] == ".":
+                roads += 1
+            # 右
+            if j < w - 1 and area[i][j + 1] == ".":
+                roads += 1
+            min_neighbor = min(min_neighbor, roads)
+            start_point[roads].add((i, j))
+    max_cost = 0
+    for start in start_point[min_neighbor]:
+        # 始点候補からもっとも遠い地点をそれぞれ求める
+        queue = deque()
+        queue.append(start)
+        cost = 0
+        visited = set()
+        while len(queue) > 0:
+            roads = len(queue)
+            found = False
+            for i in range(roads):
+                s = queue.popleft()
+                if s in visited:
+                    continue
+                found = True
+                visited.add(s)
+                i = s[0]
+                j = s[1]
+                # 上
+                if i > 0 and area[i - 1][j] == ".":
+                    queue.append((i - 1, j))
+                # 下
+                if i < h - 1 and area[i + 1][j] == ".":
+                    queue.append((i + 1, j))
+                # 左
+                if j > 0 and area[i][j - 1] == ".":
+                    queue.append((i, j - 1))
+                # 右
+                if j < w - 1 and area[i][j + 1] == ".":
+                    queue.append((i, j + 1))
+            if not found:
+                cost -= 1
+            max_cost = max(cost, max_cost)
+            if found:
+                cost += 1
+    print(max_cost)
 
 
 if __name__ == '__main__':

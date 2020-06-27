@@ -18,3 +18,8 @@ class Test(SISOTestCase):
 .#...
 """, """10
 """, main)
+
+    def test_main3(self):
+        self.helper("""1 1
+.""", """0
+""", main)
