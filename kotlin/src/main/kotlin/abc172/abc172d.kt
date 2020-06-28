@@ -1,5 +1,3 @@
-import kotlin.math.sqrt
-
 //
 
 fun main() {
@@ -9,23 +7,23 @@ fun main() {
 fun abc172d() {
     val n = readLine()!!.toLong()
     var count = 0L
-    for (i in 0L..n) {
-        count += i * bun(i)
+    for (i in 1L..n) {
+        count += (i * bun(i))
     }
     println(count)
 }
 
 private fun bun(n: Long): Long {
-    val end = sqrt(n.toDouble()).toLong()
-    var r = n
-    var count = 1L
-    for (i in 2..end) {
-        var c = 1
-        while (r % i == 0L) {
-            r /= i
-            c++
+    // 0なら約数は0個、1なら1つ, 2なら2こ（1と2）
+    if (n <= 2) return n
+    val primes = mutableSetOf<Long>(1L, n)
+    var i = 2L
+    while (i * i <= n) {
+        if (n % i == 0L) {
+            primes.add(i)
+            primes.add(n / i)
         }
-        count *= c
+        i++
     }
-    return count
+    return primes.size.toLong()
 }
