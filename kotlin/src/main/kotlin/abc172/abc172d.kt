@@ -1,3 +1,5 @@
+import java.lang.Math.floor
+
 //
 
 fun main() {
@@ -8,7 +10,8 @@ fun abc172d() {
     val n = readLine()!!.toLong()
     var count = 0L
     for (i in 1L..n) {
-        count += (i * bun(i))
+        val y = floor(n / i.toDouble()).toLong()
+        count += y * (y + 1) * i / 2
     }
     println(count)
 }
