@@ -3,36 +3,22 @@
 
 def main():
     n, a, b = map(int, input().split(" "))
-    total = n
-    p = n
-    odd = n % 2 == 0
-    limit = n // 2
-    plus_one = True
-    avoid = 0
-    if a > limit:
-        a //= 2
-    if b == n:
-        plus_one = False
-        b = 0
-    if b > limit:
-        b //= 2
-    for i in range(1, limit + 1):
-        f = max(n + 1 - i, 1)
-        if i == 1:
-            p = n
-        else:
-            p = p * f // i
-        if i == a or i == b:
-            avoid += p
-        total += p
-    if not odd:
-        total -= p
-    total = total * 2 - avoid
-    if not odd:
-        total += p
-    if plus_one:
-        total += 1
-    print(total % (10 ** 9 + 7))
+    count = 0
+    t = 1
+    even = n % 2 == 0
+    for i in range(n // 2):
+        t = t * (n - i) // (i + 1)
+        p = i + 1
+        if p != a and p != b:
+            count += t
+        r = n - p
+        if r == n // 2 and even:
+            continue
+        if r != a and r != b:
+            count += t
+    if b != n:
+        count += 1
+    print(count)
 
 
 if __name__ == '__main__':
