@@ -11,22 +11,26 @@ fun abc134d() {
     }
     val ans = mutableSetOf<Int>()
     var i = n
-    while (i * i < n) {
+    while (i * 2 > n) {
         if (a[i]) ans.add(i)
         i--
     }
-    // n/2まではiの倍数は1つしかないので、a[i]から確定できる
-    // nから1まで約数の個数を計算していって確定させていく方法をとったが、その方が計算量が増えたらしい
     while (i > 1) {
-        val count = ans.count { it % i == 0 }
-        if (count % 2 == 0) {
-            if (a[i]) ans.add(i)
-        } else {
-            if (!a[i]) ans.add(i)
+        var k = 2
+        var count = 0
+        while (i * k <= n) {
+            if (i * k in ans) count++
+            k++
         }
+        val isOdd = count % 2 == 1
+        if (isOdd xor a[i]) ans.add(i)
         i--
     }
-    if (a[1] && ans.size % 2 == 0) ans.add(1)
+    if (a[1]) {
+        if (ans.size % 2 == 0) ans.add(1)
+    } else {
+        if (ans.size % 2 == 1) ans.add(1)
+    }
     println(ans.size)
     println(ans.joinToString(" "))
 }
