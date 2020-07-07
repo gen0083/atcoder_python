@@ -1,3 +1,5 @@
+// https://atcoder.jp/contests/abc084/tasks/abc084_c
+
 fun main(args: Array<String>) {
     abc084c()
 }
@@ -28,4 +30,4 @@ fun abc084c() {
     }
 }
 
-data class Station(val cost: Int, val start: Int, val interval: Int)
+private data class Station(val cost: Int, val start: Int, val interval: Int)

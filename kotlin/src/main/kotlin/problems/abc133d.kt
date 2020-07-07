@@ -1,3 +1,6 @@
+// https://atcoder.jp/contests/abc133/tasks/abc133_d
+// TODO: try to AC
+
 import java.util.*
 import kotlin.math.abs
 import kotlin.math.max

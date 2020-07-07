@@ -1,3 +1,5 @@
+// https://atcoder.jp/contests/abc127/tasks/abc127_d
+
 import java.util.*
 
 fun main(args: Array<String>) {
@@ -17,6 +19,8 @@ fun abc127d() {
         val (b, c) = readLine()!!.split(" ").map { it.toLong() }
         operation.add(b.toInt() to c)
     }
+    // 例えば3に書き換える操作で3に変えたカードをあとから10に書き換えるのは無駄な操作になる
+    // したがって操作によって変更される値は降順にならべて、大きい数値への変更から処理していくのが最適になる
     operation.sortByDescending { it.second }
     for ((i, v) in operation) {
         if (heap.isEmpty()) break

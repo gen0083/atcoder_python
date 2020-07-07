@@ -1,3 +1,6 @@
+// https://atcoder.jp/contests/abc138/tasks/abc138_d
+// TODO: try to AC and refactoring
+
 import java.util.*
 
 fun main(args: Array<String>) {

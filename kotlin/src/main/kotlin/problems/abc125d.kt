@@ -1,3 +1,5 @@
+// https://atcoder.jp/contests/abc125/tasks/abc125_d
+
 fun main(args: Array<String>) {
     abc125d()
 }
