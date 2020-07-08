@@ -63,8 +63,12 @@ private fun triangle(i: Int, j: Int, memo: MutableMap<Pair<Int, Int>, Int>): Int
     //    return one + two
     val base_num = 1_000_000_007
     val max_num = i + 1
+    // facはn!を計算してる(だたしmod 1_000_000_007をとったものだけども)
     val fac = LongArray(max_num) { 1L }
+    // invは逆元を計算してる
     val inv = LongArray(max_num) { 0L }
+    // finvは逆元の階乗を計算してる、つまりnCrを計算するさいにn!/r!(n-r)!を計算するが、
+    // このときの分母となる1/r!の部分を逆元の階乗として計算してる
     val finv = LongArray(max_num) { 1L }
     inv[1] = 1L
     for (k in 2 until max_num) {
