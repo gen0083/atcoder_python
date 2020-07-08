@@ -1,4 +1,7 @@
 # https://atcoder.jp/contests/abc156/tasks/abc156_d
+# TODO: try to AC
+# 逆元を利用する、かつ繰り返し次乗法を使った高速計算のテクニックも必要、らしい
+# 愚直に前計算を行うとnが10^9あるので時間内に収まらない
 
 
 def main():
