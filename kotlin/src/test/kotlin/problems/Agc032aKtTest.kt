@@ -17,7 +17,20 @@ class Agc032aKtTest : BaseTest() {
                 "2\n" +
                 "2\n" +
                 "1\n" +
-                "1")
+                "1"),
+            TestData("6\n" +
+                "1 2 1 1 3 2", """1
+|2
+|1
+|3
+|1
+|2""".trimMargin()),
+            TestData("6\n1 2 3 4 3 1", """1
+|1
+|2
+|3
+|3
+|4""".trimMargin())
         )
     
     override fun callTestTarget() {
