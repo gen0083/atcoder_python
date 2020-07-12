@@ -9,17 +9,29 @@ fun aising2020d() {
     val n = readLine()!!.toInt()
     val x = readLine()!!.toMutableList()
     var bitcount = x.count { it == '1' }.toLong()
-    for (i in 0 until n) {
+    var initialValue = 0L
+    val digitValue = LongArray(n) { 0L }
+    var fac = 1L
+    for (i in x.lastIndex downTo 0) {
+        digitValue[n - i - 1] = fac
         if (x[i] == '1') {
-            x[i] = '0'
-            println(func(x.joinToString(""), bitcount - 1))
-            x[i] = '1'
-        } else {
-            x[i] = '1'
-            println(func(x.joinToString(""), bitcount + 1))
-            x[i] = '0'
+            initialValue += fac
         }
+        fac *= 2L
     }
+    println(digitValue)
+    println(initialValue)
+    //    for (i in 0 until n) {
+    //        if (x[i] == '1') {
+    //            x[i] = '0'
+    //            println(func(x.joinToString(""), bitcount - 1))
+    //            x[i] = '1'
+    //        } else {
+    //            x[i] = '1'
+    //            println(func(x.joinToString(""), bitcount + 1))
+    //            x[i] = '0'
+    //        }
+    //    }
 }
 
 private fun func(x: String, bitcount: Long): Int {
@@ -51,12 +63,9 @@ private fun convertNumber(digitString: String): Long {
 private fun popcount(n: Long): Long {
     var count = 0L
     var t = n
-    while (t > 1L) {
+    while (t / 2 != 0L) {
         count += t % 2
         t /= 2L
-    }
-    if (t == 1L) {
-        count += 1
     }
     return count
 }
