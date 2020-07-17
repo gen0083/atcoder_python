@@ -21,7 +21,7 @@ fun arc102b() {
     println(isPrime(l))
 }
 
-fun isPrime(n: Long): Boolean {
+private fun isPrime(n: Long): Boolean {
     var t = n
     if (t < 2) return false
     var i = 2
