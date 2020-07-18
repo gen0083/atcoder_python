@@ -30,8 +30,7 @@ class Tenka1_2018cKtTest : BaseTest() {
             """.trimMargin(), "0"),
             TestData("2\n1\n9", "8"),
             TestData("3\n1\n1000000000\n1", "1999999998"),
-            TestData("3\n1\n900\n900", "1798"),
-            TestData("100000\n${buildString { for (i in 1..100000) append("$i\n") }}", "9")
+            TestData("3\n1\n900\n900", "1798")
         )
     
     override fun callTestTarget() {
