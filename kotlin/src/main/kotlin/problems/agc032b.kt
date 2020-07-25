@@ -6,34 +6,32 @@ fun main() {
 
 fun agc032b() {
     val n = readLine()!!.toInt()
-    val targetNum = if (n == 4) 5 else n * (n + 1) / 2 - n
-    // 根拠はわからんが、n=4のときだけ4が作れる最大値の6が2では作れない→ここだけ特殊
-    // それ以外はnで作れる最大値が共通の最大値と思われる
-    val points = List(n) { mutableSetOf<Int>() }
-    for (i in points.lastIndex downTo 0) {
-        var t = points[i].sum()
-        for (j in n downTo 1) {
-            if (i + 1 == j) continue
-            if (j in points[i]) continue
-            if (t + j <= targetNum) {
-                if (points[j - 1].sum() + j > targetNum) continue
-                t += j
-                points[i].add(j)
-                points[j - 1].add(i + 1)
-            }
-        }
-    }
     val ans = mutableListOf<String>()
-    for ((i, v) in points.withIndex()) {
-        val num = i + 1
-        for (j in v) {
-            if (j > num) {
-                ans.add("$num $j")
+    val isEven = n % 2 == 0
+    for (i in 1 until n) {
+        for (j in i + 1..n) {
+            val isLink = if (isEven) {
+                linkInEven(i, j, n)
+            } else {
+                linkInOdd(i, j, n)
             }
+            if (isLink) ans.add("$i $j")
         }
     }
     println(ans.size)
     println(ans.joinToString("\n"))
+}
+
+private fun linkInOdd(i: Int, t: Int, n: Int): Boolean {
+    if (i == t) return false
+    if (t == n - i) return false
+    return true
+}
+
+private fun linkInEven(i: Int, t: Int, n: Int): Boolean {
+    if (i == t) return false
+    if (t == n - i + 1) return false
+    return true
 }
 
 private fun test(n: Int) {
