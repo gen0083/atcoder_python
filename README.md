@@ -8,7 +8,7 @@ https://kenkoooo.com/atcoder/#/table/gen0083
 src/algorithm_and_data_structure/ntl_1_a.py
 
 https://atcoder.jp/contests/caddi2018/tasks/caddi2018_a
-<./kotlin/src/problems/caddi2018a.kt>
+<./kotlin/src/main/kotlin/problems/caddi2018a.kt>
 
 ## 逆元
 
@@ -20,3 +20,7 @@ https://drken1215.hatenablog.com/entry/2018/06/08/210000
 
 逆元および繰り返し二乗法
 - <./python/src/abc156/d_bouquet.py>
+
+## 数学的思考訓練
+
+- <./kotlin/src/main/kotlin/problems/abc121d.kt>
