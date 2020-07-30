@@ -7,10 +7,10 @@ class Tenka1_2019cKtTest : BaseTest() {
                 "#.##.", "2"),
             TestData("9\n" +
                 ".........", "0"),
-            TestData("1\n.#..#.##.#.#", "4"),
-            TestData("1\n..#..#", "1"),
-            TestData("7\n.#..##..#..#.##", "5"),
-            TestData("7\n.##.##.", "2")
+            TestData("12\n.#..#.##.#.#", "4"),
+            TestData("6\n..#..#", "1"),
+            TestData("15\n.#..##..#..#.##", "5"),
+            TestData("6\n.##.##.", "2")
         )
     
     override fun callTestTarget() {
