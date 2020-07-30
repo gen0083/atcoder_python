@@ -21,6 +21,9 @@ https://drken1215.hatenablog.com/entry/2018/06/08/210000
 逆元および繰り返し二乗法
 - <./python/src/abc156/d_bouquet.py>
 
-## 数学的思考訓練
+## 数学的思考/着想訓練
+
+どうやって問題を解くかの考え方を導出するまでが肝な問題。
 
 - <./kotlin/src/main/kotlin/problems/abc121d.kt>
+- <./kotlin/src/main/kotlin/problems/abc140d.kt>
