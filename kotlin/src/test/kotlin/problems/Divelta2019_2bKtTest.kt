@@ -17,7 +17,15 @@ class Divelta2019_2bKtTest : BaseTest() {
                 "1 4\n" +
                 "4 6\n" +
                 "7 8\n" +
-                "30 34", "2")
+                "30 34", "2"),
+            TestData("""6
+                |1 1
+                |5 5
+                |1 2
+                |3 3
+                |6 3
+                |4 4
+            """.trimMargin(), "3")
         )
     
     override fun callTestTarget() {

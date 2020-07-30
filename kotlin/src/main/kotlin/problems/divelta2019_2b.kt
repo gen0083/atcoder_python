@@ -1,4 +1,6 @@
-import java.lang.Integer.max
+// https://atcoder.jp/contests/diverta2019-2/tasks/diverta2019_2_b
+// TODO: try to AC
+// N=50なんで全組み合わせで探索とかでいけそうな気もするが、N!だと収まらない
 
 fun main() {
     divelta2019_2b()
@@ -11,22 +13,16 @@ fun divelta2019_2b() {
         val (x, y) = readLine()!!.split(" ").map { it.toLong() }
         plots.add(x to y)
     }
-    val lines = mutableMapOf<Pair<Long, Long>, Int>()
-    var max_count = 0
-    for (i in 0 until n - 1) {
-        for (j in i + 1 until n) {
-            val p = plots[i].first - plots[j].first
-            val q = plots[i].second - plots[j].second
-            val plot = p to q
-            lines[plot] = lines.getOrDefault(plot, 0) + 1
-            max_count = max(max_count, lines[plot]!!)
-        }
+    val sortX = plots.sortedBy { it.first }
+    val sortY = plots.sortedBy { it.second }
+}
+
+private fun testOrder() {
+    var i = 50
+    var count = 1L
+    while (i > 1) {
+        count *= i
+        i--
     }
-    val line_count = lines.count { it.value == max_count }
-    val count = line_count * (max_count + 1)
-    if (count == n) {
-        println(line_count)
-    } else {
-        println(line_count + n - count)
-    }
+    println("50! = $count")
 }
