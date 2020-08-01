@@ -1,6 +1,7 @@
+import java.util.*
+import kotlin.math.ceil
+
 // https://atcoder.jp/contests/diverta2019-2/tasks/diverta2019_2_b
-// TODO: try to AC
-// N=50なんで全組み合わせで探索とかでいけそうな気もするが、N!だと収まらない
 
 fun main() {
     divelta2019_2b()
@@ -29,41 +30,62 @@ fun divelta2019_2b() {
         }
     }
     var cost = 0
-    val visited = mutableSetOf<Int>()
-    val sortedCosts = costMap.values.sortedByDescending { it.size }
+    val picked = mutableSetOf<Int>()
+    val sortedCosts = costMap.values.filter { it.size > 1 }.sortedByDescending { it.size }
     for (s in sortedCosts) {
         var maxCount = 0
         var maxLines = mutableSetOf<Int>()
         for ((i, j) in s) {
-            if (i in visited || j in visited) continue
+            if (i in picked || j in picked) continue
             val lines = mutableSetOf<Int>(i, j)
             var left = i
             var right = j
-            var count = 2
-            for ((i, j) in s) {
-                if (i in visited || j in visited) continue
-                if (i == right) {
-                    right = j
-                    lines.add(j)
-                    count++
-                } else if (j == left) {
-                    left = i
-                    count++
-                    lines.add(i)
+            var count = 0
+            val queue = ArrayDeque<Pair<Int, Int>>()
+            queue.addAll(s)
+            var found = true
+            while (queue.isNotEmpty() && found) {
+                val times = queue.size
+                var repeatTimes = 0
+                found = false
+                while (repeatTimes < times) {
+                    val t = queue.poll()
+                    repeatTimes++
+                    when {
+                        t.first == right -> {
+                            found = true
+                            right = t.second
+                            count++
+                            lines.add(t.second)
+                        }
+                        
+                        t.second == left -> {
+                            found = true
+                            left = t.first
+                            count++
+                            lines.add(t.first)
+                        }
+                        
+                        else             -> {
+                            queue.add(t)
+                        }
+                    }
                 }
-            }
-            if (maxCount < count) {
-                maxCount = count
-                maxLines = lines
+                if (maxCount < count) {
+                    maxCount = count
+                    maxLines = lines
+                }
             }
         }
         if (maxLines.isNotEmpty()) {
-            visited.addAll(maxLines)
+            picked.addAll(maxLines)
             cost++
         }
-        if (visited.size == n) break
+        if (picked.size == n) break
     }
-    if (visited.size < n) cost++
+    if (picked.size < n) {
+        cost += ceil((n - picked.size) / 2.0).toInt()
+    }
     println(cost)
 }
 
