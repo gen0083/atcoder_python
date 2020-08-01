@@ -25,7 +25,22 @@ class Divelta2019_2bKtTest : BaseTest() {
                 |3 3
                 |6 3
                 |4 4
-            """.trimMargin(), "3")
+            """.trimMargin(), "3"),
+            TestData("""13
+                |6 1
+                |-4 10
+                |-10 1
+                |-5 -1
+                |6 -15
+                |2 -5
+                |0 0
+                |-2 5
+                |4 -10
+                |10 1
+                |-6 1
+                |-5 -1
+                |-8 -3
+            """.trimMargin(), "5")
         )
     
     override fun callTestTarget() {

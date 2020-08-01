@@ -13,14 +13,14 @@ fun divelta2019_2b() {
         val (x, y) = readLine()!!.split(" ").map { it.toLong() }
         plots.add(x to y)
     }
-    val sortX = plots.sortedBy { it.first }
     val costMap = mutableMapOf<Pair<Long, Long>, MutableList<Pair<Int, Int>>>()
     for (i in 0 until n) {
-        val base = sortX[i]
-        for (j in i + 1 until n) {
-            val t = sortX[j]
-            val p = t.first - base.first
-            val q = t.second - base.second
+        val base = plots[i]
+        for (j in 0 until n) {
+            val t = plots[j]
+            val p = base.first - t.first
+            val q = base.second - t.second
+            if (p == 0L && q == 0L) continue
             if (p to q in costMap) {
                 costMap[p to q]!!.add(i to j)
             } else {
@@ -30,25 +30,40 @@ fun divelta2019_2b() {
     }
     var cost = 0
     val visited = mutableSetOf<Int>()
-    for (list in costMap.values) {
-        val lines = mutableSetOf<Int>()
-        for ((i, j) in list) {
+    val sortedCosts = costMap.values.sortedByDescending { it.size }
+    for (s in sortedCosts) {
+        var maxCount = 0
+        var maxLines = mutableSetOf<Int>()
+        for ((i, j) in s) {
             if (i in visited || j in visited) continue
-            // 同じp,qでも異なる直線かもしれないのでその確認は必要
-            if (i !in lines && j !in lines) {
-                cost++
+            val lines = mutableSetOf<Int>(i, j)
+            var left = i
+            var right = j
+            var count = 2
+            for ((i, j) in s) {
+                if (i in visited || j in visited) continue
+                if (i == right) {
+                    right = j
+                    lines.add(j)
+                    count++
+                } else if (j == left) {
+                    left = i
+                    count++
+                    lines.add(i)
+                }
             }
-            lines.add(i)
-            lines.add(j)
+            if (maxCount < count) {
+                maxCount = count
+                maxLines = lines
+            }
         }
-        visited.addAll(lines)
+        if (maxLines.isNotEmpty()) {
+            visited.addAll(maxLines)
+            cost++
+        }
         if (visited.size == n) break
     }
-    if (visited.size < n) {
-        // 最後に1つだけ余ったりする、もしくは基点がすでに他のもので使われてしまっている場合の対策場
-        // あぶれたのが複数ある場合、その2点を直線で繋げばコスト1で2点回収できる
-        cost += (n - visited.size) / 2 + 1
-    }
+    if (visited.size < n) cost++
     println(cost)
 }
 
