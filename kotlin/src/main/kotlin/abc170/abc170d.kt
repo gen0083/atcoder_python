@@ -1,4 +1,4 @@
-//
+// https://atcoder.jp/contests/abc170/tasks/abc170_d
 
 fun main() {
     abc170d()
@@ -9,8 +9,7 @@ fun abc170d() {
     val a = readLine()!!.split(" ").map { it.toInt() }
     val sorted = a.sorted()
     var i = 0
-    var count = 0
-    val others = mutableSetOf<Int>()
+    val primes = mutableSetOf<Int>()
     if (sorted[i] == 1) {
         // 1が存在する場合、1が単独なら1つだけ、複数あるなら0
         // 他のあらゆる数は1で割り切れるから
@@ -21,34 +20,28 @@ fun abc170d() {
         }
         return
     }
+    val sameNum = mutableSetOf<Int>()
     while (i < n) {
-        if (i < n - 1 && sorted[i] == sorted[i + 1]) {
-            val t = sorted[i]
-            others.add(t)
-            i++
-            while (i < n && sorted[i] == t) {
-                i++
-            }
-            continue
-        }
-        var j = 2
-        var isOrigin = true
-        while (j + j <= sorted[i]) {
-            if (sorted[i] % j == 0) {
-                if (j in others) {
-                    isOrigin = false
+        val t = sorted[i]
+        if (t in primes) {
+            // 消してしまったらダメ
+            sameNum.add(t)
+        } else {
+            // prime check
+            var isPrime = true
+            for (e in primes) {
+                if (t % e == 0) {
+                    isPrime = false
                     break
                 }
-                if (sorted[i] / j in others) {
-                    isOrigin = false
-                    break
-                }
+                // 素数をしらべるならルートまででいいが、この問題に置いてはそれでは足りない
+                // たとえば16の場合、2乗して16になるのは4だが、4がなくとも8がある場合に16は他の数で割り切れる数になる
+                // さりとて2倍で処理すると計算量的に間に合わないので難しい
+                if (e * 2 > t) break
             }
-            j++
+            if (isPrime) primes.add(t)
         }
-        if (isOrigin) count++
-        others.add(sorted[i])
         i++
     }
-    println(count)
+    println(primes.count() - sameNum.count())
 }
