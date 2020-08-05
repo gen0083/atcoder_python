@@ -1,5 +1,3 @@
-import kotlin.math.sqrt
-
 //
 
 fun main() {
@@ -8,56 +6,31 @@ fun main() {
 
 fun abc169d() {
     val n = readLine()!!.toLong()
-    //    var count = 0
-    //    var N = n
-    //    var p = 2.0
-    //    var e = 1.0
-    //    var z = pow(p, e).toLong()
-    //    val memo = mutableSetOf<Long>()
-    //    while (N % z == 0L && N > 1L) {
-    //        N /= z
-    //        memo.add(z)
-    //        count++
-    //        e++
-    //        z = pow(p, e).toLong()
-    //    }
-    //    p = 3.0
-    //    e = 1.0
-    //    z = pow(p, e).toLong()
-    //    while (N > 1L) {
-    //        while (N % z == 0L) {
-    //            N /= z
-    //            memo.add(z)
-    //            count++
-    //            e++
-    //            z = pow(p, e).toLong()
-    //        }
-    //        p += 2L
-    //        while (p.toLong() in memo) {
-    //            p += 2
-    //        }
-    //    }
-    //    println(count)
-    var count = 0
-    var N = n
-    val memo = mutableSetOf<Long>()
-    for (i in 2L..sqrt(n.toDouble()).toLong() + 1) {
-        if (N % i == 0L) {
-            count++
-            N /= i
-            memo.add(i)
-        }
-        if (N == 1L) break
-    }
-    if (N == 1L) {
-        println(count)
-    } else {
-        for (i in memo) {
-            if (N % i == 0L) {
-                println(count)
-                return
+    val primes = mutableMapOf<Long, Long>()
+    var t = n
+    var i = 2L
+    while (i * i <= t) {
+        if (t % i == 0L) {
+            primes[i] = 0L
+            while (t % i == 0L) {
+                t /= i
+                primes[i] = primes[i]!! + 1
             }
         }
-        println(count + 1)
+        i++
     }
+    if (t != 1L) primes[t] = 1L
+    var count = 0
+    for (l in primes.values) {
+        t = l
+        for (j in 1..l) {
+            t -= j
+            if (t >= 0) {
+                count++
+            } else {
+                break
+            }
+        }
+    }
+    println(count)
 }

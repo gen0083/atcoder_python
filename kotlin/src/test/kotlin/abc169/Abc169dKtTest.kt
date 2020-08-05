@@ -6,7 +6,7 @@ class Abc169dKtTest : TestBase() {
         TestData("24", "3"),
         TestData("1", "0"),
         TestData("64", "3"),
-        TestData("1000000000000", "1")
+        TestData("1000000000000", "8")
     )
     
     @ParameterizedTest

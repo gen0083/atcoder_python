@@ -8,7 +8,9 @@ https://kenkoooo.com/atcoder/#/table/gen0083
 src/algorithm_and_data_structure/ntl_1_a.py
 
 https://atcoder.jp/contests/caddi2018/tasks/caddi2018_a
-<./kotlin/src/main/kotlin/problems/caddi2018a.kt>
+
+- <./kotlin/src/main/kotlin/problems/caddi2018a.kt>
+- <./kotlin/src/main/kotlin/abc169/abc169d.kt>
 
 ## 逆元
 
