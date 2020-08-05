@@ -8,7 +8,8 @@ class Abc170dKtTest : TestBase() {
         TestData("4\n" +
             "5 5 5 5", "0\n"),
         TestData("10\n" +
-            "33 18 45 28 8 19 89 86 2 4", "5")
+            "33 18 45 28 8 19 89 86 2 4", "5"),
+        TestData("200000\n${(2..600006 step 3).joinToString(" ")}", "1")
     )
     
     @ParameterizedTest

@@ -1,5 +1,3 @@
-import java.util.*
-
 //
 
 fun main() {
@@ -9,70 +7,48 @@ fun main() {
 fun abc170d() {
     val n = readLine()!!.toInt()
     val a = readLine()!!.split(" ").map { it.toInt() }
-    val queue = ArrayDeque(a.sorted())
+    val sorted = a.sorted()
+    var i = 0
     var count = 0
-    while (queue.isNotEmpty()) {
-        val t = queue.poll()
-        var sameNum = false
-        val size = queue.size
-        repeat(size) {
-            val j = queue.poll()
-            if (j == t) {
-                sameNum = true
-            }
-            if (j % t != 0) {
-                queue.add(j)
-            }
+    val others = mutableSetOf<Int>()
+    if (sorted[i] == 1) {
+        // 1が存在する場合、1が単独なら1つだけ、複数あるなら0
+        // 他のあらゆる数は1で割り切れるから
+        if (sorted[i + 1] == 1) {
+            println(0)
+        } else {
+            println(1)
         }
-        if (!sameNum) count++
+        return
     }
-    println(count)
-}
-
-private fun pattern1() {
-    // TLE
-    val n = readLine()!!.toInt()
-    val a = readLine()!!.split(" ").map { it.toInt() }
-    val unique = a.toSet()
-    val sortedUnique = unique.sorted()
-    val itemCount = a.groupingBy { it }.eachCount()
-    var count = 0
-    for (i in sortedUnique.lastIndex downTo 0) {
-        if (itemCount[sortedUnique[i]] != 1) continue
-        var found = false
-        for (j in 0 until i) {
-            if (sortedUnique[i] % sortedUnique[j] == 0) {
-                found = true
-                break
+    while (i < n) {
+        if (i < n - 1 && sorted[i] == sorted[i + 1]) {
+            val t = sorted[i]
+            others.add(t)
+            i++
+            while (i < n && sorted[i] == t) {
+                i++
             }
+            continue
         }
-        if (!found) count += itemCount[sortedUnique[i]]!!
-    }
-    println(count)
-}
-
-private fun pattern2() {
-    // 結局一緒
-    val n = readLine()!!.toInt()
-    val a = readLine()!!.split(" ").map { it.toInt() }
-    val queue = ArrayDeque(a.sorted())
-    var count = 0
-    while (queue.isNotEmpty()) {
-        val t = queue.poll()
-        var found = 0
-        var sameNum = false
-        val size = queue.size
-        repeat(size) {
-            val j = queue.poll()
-            if (j == t) {
-                sameNum = true
+        var j = 2
+        var isOrigin = true
+        while (j + j <= sorted[i]) {
+            if (sorted[i] % j == 0) {
+                if (j in others) {
+                    isOrigin = false
+                    break
+                }
+                if (sorted[i] / j in others) {
+                    isOrigin = false
+                    break
+                }
             }
-            if (j % t != 0) {
-                queue.add(j)
-                found++
-            }
+            j++
         }
-        if (!sameNum) count++
+        if (isOrigin) count++
+        others.add(sorted[i])
+        i++
     }
     println(count)
 }
