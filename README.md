@@ -29,3 +29,9 @@ https://drken1215.hatenablog.com/entry/2018/06/08/210000
 
 - <./kotlin/src/main/kotlin/problems/abc121d.kt>
 - <./kotlin/src/main/kotlin/problems/abc140d.kt>
+
+## 実装方法
+
+オーダーがシビアな良問
+
+- <./kotlin/src/main/kotlin/abc170/abc170d.kt>

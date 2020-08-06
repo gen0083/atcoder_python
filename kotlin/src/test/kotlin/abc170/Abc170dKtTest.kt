@@ -7,7 +7,7 @@ class Abc170dKtTest : TestBase() {
             "24 11 8 3 16", "3\n"),
         TestData("4\n" +
             "5 5 5 5", "0\n"),
-        TestData("200000\n${(2..600006 step 3).joinToString(" ")}", "1"),
+        TestData("200000\n${(2..600000 step 3).joinToString(" ")}", "1"),
         TestData("10\n" +
             "33 18 45 28 8 19 89 86 2 4", "5")
     )
