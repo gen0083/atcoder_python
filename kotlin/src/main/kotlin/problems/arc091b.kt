@@ -8,13 +8,12 @@ fun arc091b() {
     val (n, k) = readLine()!!.split(" ").map { it.toInt() }
     var count = 0L
     for (b in k + 1..n) {
-        val cycle = n / b
-        var c = n - cycle * k
-        val remain = n % b
-        if (remain >= k) {
-            c -= k - 1
-        } else {
-            c -= remain
+        val nn = if (k == 0) n else n + 1
+        val cycle = nn / b
+        var c = cycle * (b - k)
+        val remain = nn % b
+        if (remain > k) {
+            c += (remain - k)
         }
         count += c
     }
