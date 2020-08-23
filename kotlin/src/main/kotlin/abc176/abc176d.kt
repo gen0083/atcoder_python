@@ -18,7 +18,7 @@ fun abc176d() {
         }
     }
     val step = List(h) { IntArray(w) { -2 } }
-    var wall = ArrayDeque<Pair<Int, Int>>()
+    var visited = ArrayDeque<Pair<Int, Int>>()
     val next = ArrayDeque<Pair<Int, Int>>()
     next.add(dh to dw)
     var s = 0
@@ -30,42 +30,33 @@ fun abc176d() {
             if (step[th][tw] > -2) continue
             if (map[th][tw] == '.') {
                 step[th][tw] = s
-                val startH = (th - 1).coerceAtLeast(0)
-                val endH = (th + 1).coerceAtMost(h - 1)
-                val startW = (tw - 1).coerceAtLeast(0)
-                val endW = (tw + 1).coerceAtMost(w - 1)
-                for (i in startH..endH) {
-                    for (j in startW..endW) {
-                        if (step[i][j] > -2) continue
-                        if (map[i][j] == '.') {
-                            if (th == i || tw == j) next.add(i to j)
-                        } else {
-                            wall.add(i to j)
-                        }
-                    }
-                }
+                visited.add(th to tw)
+                next.add(th - 1 to tw)
+                next.add(th + 1 to tw)
+                next.add(th to tw - 1)
+                next.add(th to tw + 1)
             }
         }
         s++
-        while (wall.isNotEmpty()) {
-            val (th, tw) = wall.poll()
+        while (visited.isNotEmpty()) {
+            val (th, tw) = visited.poll()
             if (th !in 0 until h) continue
             if (tw !in 0 until w) continue
-            if (step[th][tw] > -2) continue
-            if (map[th][tw] == '#') {
-                step[th][tw] = -1
-                val startH = (th - 2).coerceAtLeast(0)
-                val endH = (th + 2).coerceAtMost(h - 1)
-                val startW = (tw - 2).coerceAtLeast(0)
-                val endW = (tw + 2).coerceAtMost(w - 1)
-                for (i in startH..endH) {
-                    for (j in startW..endW) {
-                        if (map[i][j] == '.' && step[i][j] == -2) next.add(i to j)
+            val startH = (th - 2).coerceAtLeast(0)
+            val endH = (th + 2).coerceAtMost(h - 1)
+            val startW = (tw - 2).coerceAtLeast(0)
+            val endW = (tw + 2).coerceAtMost(w - 1)
+            for (i in startH..endH) {
+                for (j in startW..endW) {
+                    if (map[i][j] == '.') {
+                        if (step[i][j] == -2) next.add(i to j)
+                    } else {
+                        step[i][j] = -1
                     }
                 }
             }
         }
-        if (next.isEmpty() && wall.isEmpty()) break
+        if (next.isEmpty() && visited.isEmpty()) break
     }
     val ans = step[ch][cw]
     println(if (ans < 0) -1 else ans)
