@@ -33,7 +33,7 @@ class Abc176eKtTest : TestBase() {
             |3 1
             |3 2
             |3 3
-        """.trimMargin(), "9")
+        """.trimMargin(), "5")
     )
     
     @ParameterizedTest

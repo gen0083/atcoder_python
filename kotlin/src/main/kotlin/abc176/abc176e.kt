@@ -1,5 +1,3 @@
-import java.util.*
-
 //
 
 fun main() {
@@ -8,43 +6,44 @@ fun main() {
 
 fun abc176e() {
     val (h, w, m) = readLine()!!.split(" ").map { it.toInt() }
-    val bom = mutableListOf<Pair<Int, Int>>()
-    val ih = List<MutableSet<Int>>(h + 1) { mutableSetOf() }
-    val iw = List<MutableSet<Int>>(w + 1) { mutableSetOf() }
-    repeat(m) { i ->
-        val (x, y) = readLine()!!.split(" ").map { it.toInt() }
-        bom.add(x to y)
-        ih[x].add(i)
-        iw[y].add(i)
-    }
-    val visited = mutableSetOf<Int>()
-    val group = mutableListOf<MutableSet<Int>>()
-    var i = 0
-    val next = ArrayDeque<Int>()
-    var g = mutableSetOf<Int>()
-    while (visited.size < m && i < m) {
-        var t = i
-        if (next.isNotEmpty()) {
-            t = next.poll()
+    val bom = mutableMapOf<Int, MutableSet<Int>>()
+    val countH = IntArray(h + 1) { 0 }
+    val countW = IntArray(w + 1) { 0 }
+    var maxH = 0
+    val maxHIndices = mutableSetOf<Int>()
+    var maxW = 0
+    val maxWIndices = mutableSetOf<Int>()
+    repeat(m) {
+        val (ih, iw) = readLine()!!.split(" ").map { it.toInt() }
+        if (ih in bom) {
+            bom[ih]!!.add(iw)
         } else {
-            if (g.isNotEmpty()) {
-                group.add(g)
-                g = mutableSetOf()
-            }
-            i++
+            bom[ih] = mutableSetOf(iw)
         }
-        if (t in visited) continue
-        visited.add(t)
-        g.add(t)
-        val b = bom[t]
-        next.addAll(ih[b.first])
-        next.addAll(iw[b.second])
+        countH[ih]++
+        if (countH[ih] > maxH) {
+            maxH = countH[ih]
+            maxHIndices.clear()
+            maxHIndices.add(ih)
+        } else if (countH[ih] == maxH) {
+            maxHIndices.add(ih)
+        }
+        countW[iw]++
+        if (countW[iw] > maxW) {
+            maxW = countW[iw]
+            maxWIndices.clear()
+            maxWIndices.add(iw)
+        } else if (countW[iw] == maxW) {
+            maxWIndices.add(iw)
+        }
     }
-    if (g.isNotEmpty()) group.add(g)
-    if (group.size == 1) {
-        println(group[0].size)
-    } else {
-        val sorted = group.sortedByDescending { it.size }
-        println(sorted[0].size + sorted[1].size)
+    for (th in maxHIndices) {
+        for (tw in maxWIndices) {
+            if (bom[th]?.contains(tw)?.not() ?: false) {
+                println(maxH + maxW)
+                return
+            }
+        }
     }
+    println(maxH + maxW - 1)
 }
