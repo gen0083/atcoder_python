@@ -8,7 +8,13 @@ class Abc177eKtTest : TestBase() {
         TestData("3\n" +
             "6 10 15", "setwise coprime\n"),
         TestData("3\n" +
-            "6 10 16", "not coprime\n")
+            "6 10 16", "not coprime\n"),
+        TestData("1000000\n1000000${buildString { repeat(999999) { append(" 1000000") } }}",
+            "not coprime"),
+        TestData("5\n2 3 6 11 9", "setwise coprime"),
+        TestData("2\n15 25", "not coprime"),
+        TestData("3\n1 2 3", "pairwise coprime"),
+        TestData("3\n1 2 4", "setwise coprime")
     )
     
     @ParameterizedTest

@@ -1,6 +1,3 @@
-import java.lang.Integer.max
-import java.lang.Integer.min
-
 //
 
 fun main() {
@@ -10,33 +7,48 @@ fun main() {
 fun abc177e() {
     val n = readLine()!!.toInt()
     val a = readLine()!!.split(" ").map { it.toInt() }
-    val gcds = mutableSetOf<Int>()
-    var pairWise = true
-    var common = a[0]
-    for (i in 0 until n) {
+    val gcds = mutableMapOf<Int, Int>()
+    var max = a.max()!!
+    val table = IntArray(max + 1)
+    table[1] = 1
+    for (i in 2..max) {
+        if (table[i] != 0) continue
         var j = 1
-        var t = 1
-        while (j * j <= a[i]) {
-            if (a[i] % j == 0) {
-                if (j != 1 && j in gcds) {
-                    pairWise = false
-                    break
-                }
-                gcds.add(j)
-                if (common % j == 0) t = max(t, j)
-                val big = a[i] / j
-                gcds.add(a[i] / j)
-                if (common % big == 0) t = max(t, j)
+        while (i * j <= max) {
+            if (table[i * j] == 0) {
+                table[i * j] = i
             }
             j++
         }
-        common = min(t, common)
     }
-    if (pairWise) {
-        println("pairwise coprime")
-    } else if (common == 1) {
-        println("setwise coprime")
+    for (i in a) {
+        var t = i
+        var j = table[t]
+        while (t != j) {
+            val p = j
+            while (j == p) {
+                t /= j
+                j = table[t]
+            }
+            gcds[p] = gcds.getOrDefault(p, 0) + 1
+        }
+        gcds[t] = gcds.getOrDefault(t, 0) + 1
+    }
+    // 1が存在するならnot coprimeにはならない
+    if (a.contains(1)) {
+        if (gcds.filter { it.value > 1 }.isNotEmpty()) {
+            println("setwise coprime")
+        } else {
+            println("pairwise coprime")
+        }
     } else {
-        println("not coprime")
+        val maxCount = gcds.maxBy { it.value }!!
+        if (maxCount.value == 1) {
+            println("pairwise coprime")
+        } else if (maxCount.value == a.size) {
+            println("not coprime")
+        } else {
+            println("setwise coprime")
+        }
     }
 }
