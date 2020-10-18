@@ -1,4 +1,5 @@
-import kotlin.math.min
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 //
 
@@ -7,16 +8,15 @@ fun main() {
 }
 
 fun abc180d() {
-    val (x, y, a, b) = readLine()!!.split(" ").map { it.toLong() }
-    val goal = y - 1L
-    val m = min(goal, x + b)
-    var at = 0
-    var t = x
-    while (t <= m) {
-        t *= a
-        at++
+    val (x, y, a, b) = readLine()!!.split(" ").map { BigDecimal(it) }
+    var count = 0L
+    var p = x
+    while (p * a < p + b) {
+        if (p * a >= y) break
+        count++
+        p *= a
     }
-    val bt = ((goal - x * a * at) / b).coerceAtLeast(0L)
-    println(at + bt)
-    println(2 / 4)
+    val remain = (y - p - BigDecimal.ONE).divide(b, RoundingMode.FLOOR)
+    if (remain > BigDecimal.ZERO) count += remain.longValueExact()
+    println(count)
 }
