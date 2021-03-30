@@ -1,0 +1,8 @@
+//
+
+fun main() {
+    ${contest_file_name}()
+}
+
+fun ${contest_file_name}() {
+}
