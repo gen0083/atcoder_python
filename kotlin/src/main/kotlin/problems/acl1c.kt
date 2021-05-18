@@ -1,6 +1,7 @@
 import java.lang.Integer.min
+import java.util.*
 
-//
+// https://atcoder.jp/contests/abl/tasks/abl_c
 
 fun main() {
     acl1c()
@@ -8,26 +9,31 @@ fun main() {
 
 fun acl1c() {
     val (n, m) = readLine()!!.split(" ").map { it.toInt() }
-    val cities = IntArray(n + 1) { 0 }
+    val root = IntArray(n + 1) { it }
     repeat(m) {
-        val targets = readLine()!!.split(" ").map { it.toInt() }
-        val parents = intArrayOf(cities[targets[0]], cities[targets[1]])
-        for ((i, t) in parents.withIndex()) {
-            var tmp = t
-            while (tmp != 0 && tmp != cities[tmp]) {
-                tmp = cities[tmp]
-            }
-            if (tmp == 0) parents[i] = targets[i]
+        val (a, b) = readLine()!!.split(" ").map { it.toInt() }
+        var at = a
+        var bt = b
+        val stack = ArrayDeque<Int>()
+        stack.push(a)
+        stack.push(b)
+        while (root[at] != at) {
+            at = root[at]
+            stack.push(at)
         }
-        val parent = min(parents[0], parents[1])
-        for (i in 0..1) {
-            cities[targets[i]] = parent
-            cities[parents[i]] = parent
+        while (root[bt] != bt) {
+            bt = root[bt]
+            stack.push(bt)
+        }
+        val t = min(at, bt)
+        while (stack.isNotEmpty()) {
+            val node = stack.pop()
+            root[node] = t
         }
     }
     var count = 0
     for (i in 1..n) {
-        if (cities[i] == i || cities[i] == 0) count++
+        if (root[i] == i) count++
     }
     println(count - 1)
 }
