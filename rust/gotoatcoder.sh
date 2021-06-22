@@ -1,0 +1,1 @@
+open "https://atcoder.jp/home"
