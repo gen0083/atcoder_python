@@ -25,7 +25,8 @@ src = '''
 use proconio::input;
 
 fn main() {
-    todo!();
+    input!{
+    }
     println!("{}", result);
 }
 '''
