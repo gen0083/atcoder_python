@@ -16,7 +16,7 @@ else
 		cd $BASE_DIR
 		cargo compete new $1
 		code $BASE_DIR$1
-		cd CALL_DIR
+		cd $CALL_DIR
 	fi
 fi
 
