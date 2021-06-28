@@ -1,0 +1,27 @@
+---
+type: Batch
+timelimit: 2s
+match: Lines
+
+cases:
+  - name: sample1
+    in: |
+      )x(
+    out: |
+      3
+  - name: sample2
+    in: |
+      ()ox
+    out: |
+      2
+  - name: sample3
+    in: |
+      ()oxo(xxx))))oox((oooxxoxo)oxo)ooo(xxx(oox(x)(x()x
+    out: |
+      68
+
+extend:
+  - type: Text
+    path: "./d"
+    in: /in/*.txt
+    out: /out/*.txt
