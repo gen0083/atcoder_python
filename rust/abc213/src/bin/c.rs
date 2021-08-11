@@ -10,13 +10,13 @@ fn main() {
         n: usize,
         cards: [(u64, u64); n]
     }
-    let mut row: Vec<u64> = cards.iter().map(|v| v.0).unique().collect();
-    let mut col: Vec<u64> = cards.iter().map(|v| v.1).collect();
+    let mut row = cards.iter().map(|v| v.0).unique().collect_vec();
+    let mut col = cards.iter().map(|v| v.1).unique().collect_vec();
     row.sort();
     col.sort();
-    for c in cards {
-        let r = row.iter().position(|&x| x == c.0).unwrap() + 1;
-        let c = col.iter().position(|&x| x == c.1).unwrap() + 1;
-        println!("{} {}", r, c);
+    for (a, b) in cards {
+        let c = row.binary_search(&a).unwrap() + 1;
+        let d = col.binary_search(&b).unwrap() + 1;
+        println!("{} {}", c, d);
     }
 }
