@@ -1,45 +1,48 @@
 use std::collections::HashSet;
 
+use itertools::Itertools;
 use proconio::input;
 
 fn main() {
-    input!{
+    input! {
         n: usize,
         roads: [(usize, usize); n - 1]
     }
-    let mut town: Vec<HashSet<usize>> = vec![HashSet::new(); n];
-    for r in roads {
-        town[r.0 - 1].insert(r.1 - 1);
-        town[r.1 - 1].insert(r.0 - 1);
+    let mut nodes: Vec<Vec<usize>> = vec![vec![]; n];
+    for (a, b) in roads {
+        nodes[a - 1].push(b - 1);
+        nodes[b - 1].push(a - 1);
     }
-    let mut stack = vec![0usize];
-    let mut visited = HashSet::<usize>::new();
+    let mut stack = vec![];
     let mut current = 0usize;
-    let mut ans = String::from("1");
-    while !stack.is_empty() {
-        let next = town[current].clone();
-        match next.iter().min() {
-            Some(p) => {
-                town[current].remove(&p);
-                if visited.contains(&p) {
-                    continue;
+    let mut hist = vec![0];
+    let mut visited = HashSet::<usize>::new();
+    visited.insert(current);
+    loop {
+        let mut nexts = nodes[current].clone();
+        nexts.sort();
+        let mut is_found = false;
+        for next in nexts {
+            if !visited.contains(&next) {
+                is_found = true;
+                stack.push(current);
+                visited.insert(next);
+                current = next;
+                break;
+            }
+        }
+        if !is_found {
+            match stack.pop() {
+                Some(c) => {
+                    hist.push(current);
+                    current = c;
                 }
-                current = *p;
-                stack.push(*p);
-                visited.insert(*p);
-            },
-            None => {
-                let next = stack.pop();
-                match next {
-                    Some(i) => {
-                        current = i;
-                        continue;
-                    },
-                    None => {break;}
+                None => {
+                    break;
                 }
             }
         }
-        ans.push_str(&format!(" {}", current + 1));
+        hist.push(current);
     }
-    println!("{}", ans);
+    println!("{}", hist.iter().map(|i| (i + 1).to_string()).join(" "));
 }
