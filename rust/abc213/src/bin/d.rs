@@ -1,4 +1,7 @@
-use std::collections::HashSet;
+use std::{
+    cmp::Reverse,
+    collections::{BinaryHeap, HashSet},
+};
 
 use itertools::Itertools;
 use proconio::input;
@@ -8,10 +11,10 @@ fn main() {
         n: usize,
         roads: [(usize, usize); n - 1]
     }
-    let mut nodes: Vec<Vec<usize>> = vec![vec![]; n];
+    let mut nodes: Vec<BinaryHeap<_>> = vec![BinaryHeap::new(); n];
     for (a, b) in roads {
-        nodes[a - 1].push(b - 1);
-        nodes[b - 1].push(a - 1);
+        nodes[a - 1].push(Reverse(b - 1));
+        nodes[b - 1].push(Reverse(a - 1));
     }
     let mut stack = vec![];
     let mut current = 0usize;
@@ -19,30 +22,21 @@ fn main() {
     let mut visited = HashSet::<usize>::new();
     visited.insert(current);
     loop {
-        let mut nexts = nodes[current].clone();
-        nexts.sort();
-        let mut is_found = false;
-        for next in nexts {
-            if !visited.contains(&next) {
-                is_found = true;
+        while let Some(next) = nodes[current].pop() {
+            if !visited.contains(&next.0) {
                 stack.push(current);
-                visited.insert(next);
-                current = next;
-                break;
+                hist.push(next.0);
+                visited.insert(next.0);
+                current = next.0;
             }
         }
-        if !is_found {
-            match stack.pop() {
-                Some(c) => {
-                    hist.push(current);
-                    current = c;
-                }
-                None => {
-                    break;
-                }
+        match stack.pop() {
+            None => break,
+            Some(v) => {
+                current = v;
+                hist.push(current);
             }
         }
-        hist.push(current);
     }
     println!("{}", hist.iter().map(|i| (i + 1).to_string()).join(" "));
 }
