@@ -6,3 +6,5 @@ mod option_usage;
 mod sample_itertools;
 mod char_str;
 mod numbers;
+mod set_sample;
+mod bit_operation;
