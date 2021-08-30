@@ -11,3 +11,13 @@ fn queue_sample() {
 	println!("pop front: {:?}", queue.pop_front());
 	println!("after queue: {:?}", queue);
 }
+
+#[test]
+fn queue_extend_with_vec() {
+	let mut queue = VecDeque::new();
+	queue.push_back(3);
+	println!("{:?}", queue);
+	let v = [1, 2, 3];
+	queue.extend(v);
+	println!("{:?}", queue);
+}
