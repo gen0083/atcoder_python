@@ -39,3 +39,15 @@ fn test_insert_position_with_binary_search_desc() {
 	// binary_searchでは昇順に並んでいることが前提になっているっぽい？
 	// 降順に並んでいる場合はbinary_search_byを使って比較方法を指定すれば想定通りの動きをする
 }
+
+#[test]
+fn insert_item() {
+	let mut list = vec![2, 4, 6, 8, 10];
+	let p = list.binary_search(&5);
+	println!("{:?}", p);
+	assert_eq!(p, Err(2));
+	if let Err(i) = p {
+		list.insert(i, 5);
+		println!("{:?}", list);
+	}
+}
