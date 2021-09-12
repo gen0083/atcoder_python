@@ -1,3 +1,5 @@
+use std::collections::BTreeSet;
+
 use proconio::input;
 
 fn main() {
@@ -6,15 +8,16 @@ fn main() {
         q: usize,
         query: [(u8, u64); q]
     }
-    let mut wood = vec![0, l];
+    let mut wood = BTreeSet::new();
+    wood.insert(0);
+    wood.insert(l);
     for (t, x) in query {
-        let i = wood.binary_search(&x);
-        if let Err(p) = i {
-            if t == 1 {
-                wood.insert(p, x);
-            } else {
-                println!("{}", wood[p] - wood[p - 1]);
-            }
+        if t == 1 {
+            wood.insert(x);
+        } else {
+            let l = wood.range(..x).next_back().unwrap();
+            let r = wood.range(x..).next().unwrap();
+            println!("{}", *r - *l);
         }
     }
 }
