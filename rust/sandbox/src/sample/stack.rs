@@ -20,3 +20,21 @@ fn using_stack() {
 	stack.push(5);
 	assert_eq!(stack.pop(), Some(5));
 }
+
+#[test]
+fn range_test() {
+	for i in 0..3 {
+		println!("{}", i);
+	}
+	for i in 0..=3 {
+		println!("{}", i);
+	}
+	for i in 3..0 {
+		// no output
+		println!("{}", i);
+	}
+	for i in (3..0).rev() {
+		// 逆順が必要な場合はrev()を使う
+		println!("{}", i);
+	}
+}

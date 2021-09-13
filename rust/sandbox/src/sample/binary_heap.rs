@@ -34,3 +34,18 @@ fn test_binary_heap_with_reverse_key() {
 	println!("after heap: {:?}", heap);
 	
 }
+
+#[test]
+fn heap_extend_with_vec() {
+	let mut heap = BinaryHeap::new();
+	heap.push(3);
+	heap.push(9);
+	println!("{:?}", heap);
+	let v = vec![1, 4, 13];
+	heap.extend(v);
+	println!("{:?}", heap);
+	assert_eq!(heap.pop(), Some(13));
+	assert_eq!(heap.pop(), Some(9));
+	assert_eq!(heap.pop(), Some(4));
+	println!("{:?}", heap);
+}
