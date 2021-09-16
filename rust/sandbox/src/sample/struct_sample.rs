@@ -1,4 +1,4 @@
-use std::collections::BinaryHeap;
+use std::{collections::BinaryHeap, num::ParseIntError, str::FromStr};
 
 #[derive(Debug, Eq, PartialEq)]
 struct Test {
@@ -15,6 +15,18 @@ impl Ord for Test {
 	}
 }
 
+impl FromStr for Test {
+    type Err = ParseIntError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+	let nums: Vec<&str> = s.trim().split(' ').collect();
+        let a = nums[0].parse::<usize>()?;
+        let b = nums[1].parse::<usize>()?;
+        let cost = nums[2].parse::<i64>()?;
+        Ok(Test {a, b, cost})
+    }
+}
+
 impl PartialOrd for Test {
     fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
 	Some(other.cost.cmp(&self.cost))
@@ -29,11 +41,7 @@ fn struct_ordering() {
 		b: 1,
 		cost: 10,
 	};
-	let b = Test {
-		a: 2,
-		b: 3,
-		cost: 3,
-	};
+	let b = Test::from_str("2 3 3").unwrap();
 	println!("{:?}", a);
 	println!("eq? {}", a == b);
 	println!("eq? {}", a == Test{ a: 1, b:1, cost: 10});
