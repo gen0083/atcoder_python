@@ -9,3 +9,4 @@ mod numbers;
 mod set_sample;
 mod bit_operation;
 mod map_sample;
+mod struct_sample;
