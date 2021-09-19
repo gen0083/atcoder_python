@@ -1,33 +1,52 @@
+use std::cmp::max;
+use std::cmp::min;
 use proconio::input;
 
 fn main() {
     input!{
         n: usize,
-        x: u32,
-        y: u32,
-        mut o: [(u32, u32); n]
+        x: usize,
+        y: usize,
+        o: [(usize, usize); n]
     }
-    // let mut t: Vec<Vec<(u32, u32)>> = vec![vec![(0, 0); n+1]; n+1];
-    // for i in 1..=n {
-    //     for j in i+1..=n {
-    //         // j個目の弁当まででi個選んだときのXYの最大数
-    //         let tako = o[i-1].0 + t[i -1][j-1].0;
-    //         let tai = o[i-1].1 + t[i -1][j-1].1;
-    //         if tako >= x && tai >= y {
-    //             println!("{}", i);
-    //             return;
-    //         }
-    //         t[i][j] = (tako, tai);
+    let inf = 301;
+    let mut dp: Vec<Vec<Vec<usize>>> = vec![vec![vec![inf; y+1]; x+1]; 2];
+    // initialize
+    dp[1][0][0] = 0;
+    dp[0][0][0] = 0;
+    // for i in 0..2 {
+    //     for j in 0..=x {
+    //         dp[i][j][0] = 0;
+    //     }
+    //     for j in 0..=y {
+    //         dp[i][0][j] = 0;
     //     }
     // }
-    // println!("-1");
-    o.sort_by(|i, j| j.0.cmp(&i.0));
-    let mut i = 0usize;
-    let mut tako = 0u32;
-    while tako <= x {
-        tako += o[i].0;
-        i+=1;
+    for i in 0..n {
+        let before = i%2;
+        let current = (i+1)%2;
+        // 弁当iを選択する場合に達成可能なたこj個、たいk個の更新
+        let tako = min(o[i].0, x);
+        let tai = min(o[i].1, y);
+        // i個目の弁当をただ1つ選んだ場合に達成可能なところを埋める
+        dp[current][tako][tai] = min(dp[before][tako][tai], 1);
+        // 直前の集計結果より、i個目の1つ前までの弁当の選択によって達成可能な最小個数を元に
+        // i個目の弁当を選択することによって達成できる最小個数を更新していく
+        for j in 0..=x {
+            for k in 0..=y {
+                // i個目の弁当を選ぶ場合
+                // xx,yyはi個目を選んだ場合に得られるたこ・たいがx/yを超えた場合はx/yとして扱うためのリミッター
+                let xx = min(j + tako, x);
+                let yy = min(k+tai, y);
+                dp[current][xx][yy] = min(dp[current][xx][yy], dp[before][j][k] + 1);
+                // i個目の弁当を選ばない場合
+                dp[current][j][k] = min(dp[current][j][k], dp[before][j][k]);
+            }
+        }
     }
-    let mut tai = 0u32;
-    
+    if dp[n%2][x][y] >= inf {
+        println!("-1");
+    } else {
+        println!("{}", dp[n%2][x][y]);
+    }
 }
