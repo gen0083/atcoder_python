@@ -17,7 +17,6 @@ fn main() {
                 if i == 0 {
                     c0 |= true;
                 } else {
-                    c0 |= j == 0;
                     c1 |= j == 0;
                 }
             }
@@ -37,7 +36,7 @@ fn main() {
             a /= 2;
             s /= 2;
         }
-        if k0 && !k1 {
+        if k0 {
             println!("Yes");
         } else {
             println!("No");
