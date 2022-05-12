@@ -8,7 +8,7 @@ fun abc170d() {
     val n = readLine()!!.toInt()
     val a = readLine()!!.split(" ").map { it.toInt() }
     val sorted = a.sorted()
-    val max = a.max()!!
+    val max = a.maxOrNull()!!
     val primes = BooleanArray(max + 1) { false }
     for (i in sorted) {
         if (primes[i]) continue

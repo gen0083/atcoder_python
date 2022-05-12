@@ -1,4 +1,4 @@
-fun main(args: Array<String>) {
+fun main() {
     abc165c()
 }
 
@@ -16,7 +16,7 @@ fun abc165c() {
         query.add(q)
     }
     val poiints = pattern.map { calculatePoint(it, query) }
-    println(poiints.max())
+    println(poiints.maxOrNull())
 }
 
 private fun makePattern(n: Int, m: Int, c: Int, pattern: MutableList<IntArray>,

@@ -8,7 +8,7 @@ fun abc177e() {
     val n = readLine()!!.toInt()
     val a = readLine()!!.split(" ").map { it.toInt() }
     val gcds = mutableMapOf<Int, Int>()
-    var max = a.max()!!
+    var max = a.maxOrNull()!!
     val table = IntArray(max + 1)
     table[1] = 1
     for (i in 2..max) {
@@ -42,7 +42,7 @@ fun abc177e() {
             println("pairwise coprime")
         }
     } else {
-        val maxCount = gcds.maxBy { it.value }!!
+        val maxCount = gcds.maxByOrNull { it.value }!!
         if (maxCount.value == 1) {
             println("pairwise coprime")
         } else if (maxCount.value == a.size) {

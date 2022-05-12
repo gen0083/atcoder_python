@@ -48,7 +48,7 @@ fun abc175d() {
         }
     }
     val maxPair = possibleMax.mapIndexed { index, l -> index to l }
-    val max = maxPair.maxBy { it.second }!!
+    val max = maxPair.maxByOrNull { it.second }!!
     var ans = max.second
     var sum = 0L
     for (i in loops[max.first]) {

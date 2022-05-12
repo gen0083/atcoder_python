@@ -47,7 +47,7 @@ private fun test(n: Int) {
         cannot[i] = pattern.last().subtract(e)
     }
     println("max n = ${allSum - n}")
-    println("全共通最大値 ${set.max()}")
+    println("全共通最大値 ${set.maxOrNull()}")
     println("各iごとに作れない数")
     cannot.forEachIndexed { i, v ->
         println("${i + 1} = ${v.joinToString(" ")}")

@@ -12,7 +12,7 @@ fun arc105b() {
     val a = readLine()!!.split(" ").map { it.toInt() }.toSet()
     val queue = PriorityQueue<Int> { o1, o2 -> o2 - o1 }
     queue.addAll(a)
-    var m = a.min()!!
+    var m = a.minOrNull() ?: 0
     var x = queue.poll()
     while (x != m) {
         val t = x - m

@@ -54,7 +54,7 @@ private fun howManyCoins(n: Long, a: Long, b: Long, c: Long, d: Long): Long {
     //    pattern.add(DivideCounter(0L, countD = onlyD))
     pattern.add(Coins(n, limit, a, b, c, d))
     countUp(pattern, Coins(1L, d, a, b, c, d), n, limit)
-    val minCount = pattern.minBy { it.coins }!!.coins
+    val minCount = pattern.minByOrNull { it.coins }!!.coins
     return minCount
 }
 

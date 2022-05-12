@@ -11,7 +11,7 @@ fun abc174e() {
     val (n, k) = readLine()!!.split(" ").map { it.toLong() }
     val a = readLine()!!.split(" ").map { it.toLong() }
     if (k == 0L) {
-        println(a.max())
+        println(a.maxOrNull())
         return
     }
     var total = 0L
