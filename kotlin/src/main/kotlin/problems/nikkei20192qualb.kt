@@ -11,7 +11,7 @@ fun nikkei20192qualb() {
     val n = readLine()!!.toInt()
     val d = readLine()!!.split(" ").map { it.toInt() }
     val appear = d.groupingBy { it }.eachCount()
-    val destinationMax = appear.keys.maxOrNull() ?: 0
+    val destinationMax = appear.keys.max() ?: 0
     if (d.first() != 0 || appear[0] != 1) {
         println("0")
         return

@@ -23,10 +23,10 @@ fun intro_heuristicsa() {
         val minloss_disapoint =
             minloss_last.mapIndexed { index, i -> (it - i + 1) * c[index] }.sum()
         val minloss_score =
-            scores.maxByOrNull { (index, value) -> value + (c[index] * (day - minloss_last[index])) - minloss_disapoint }!!
+            scores.maxBy { (index, value) -> value + (c[index] * (day - minloss_last[index])) - minloss_disapoint }!!
         minloss_pattern.add(minloss_score.first + 1)
         minloss_last[minloss_score.first] = day
-        val max_score = scores.maxByOrNull { it.second }!!
+        val max_score = scores.maxBy { it.second }!!
         max_pattern.add(max_score.first + 1)
         max_last[max_score.first] = day
     }

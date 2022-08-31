@@ -12,7 +12,7 @@ fun abc186b() {
     var total = 0
     repeat(h) {
         val a = readLine()!!.split(" ").map { it.toInt() }
-        m = min(m, a.minOrNull()!!)
+        m = min(m, a.min()!!)
         total += a.sum()
     }
     val target = m * h * w
