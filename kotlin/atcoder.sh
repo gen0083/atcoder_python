@@ -18,7 +18,7 @@ fi
 cd "$(dirname $0)"
 source_dir="src/main/kotlin/"
 test_dir="src/test/kotlin/"
-array=("a" "b" "c" "d" "e" "f")
+array=("a" "b" "c" "d" "e" "f" "g" "h")
 template_for_source="atcoder_template.txt"
 template_for_test="atcoder_template_for_test.txt"
 
