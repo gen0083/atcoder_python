@@ -30,5 +30,5 @@ fun abc266d() {
             }
         }
     }
-    println(s[last].max())
+    println(s[last].maxOrNull())
 }

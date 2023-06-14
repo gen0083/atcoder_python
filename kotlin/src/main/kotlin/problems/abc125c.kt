@@ -7,7 +7,7 @@ fun main() {
 fun abc125c() {
     val n = readLine()!!.toInt()
     val a = readLine()!!.split(" ").map { it.toInt() }
-    val maxA = a.max() ?: 0
+    val maxA = a.maxOrNull() ?: 0
     val table = IntArray(maxA + 1)
     table[1] = 1
     for (i in 2..maxA) {

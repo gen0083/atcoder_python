@@ -29,5 +29,5 @@ fun abc252c() {
         }
         count[i] += (maxCount - 1) * 10 + maxIndex
     }
-    println(count.min())
+    println(count.minOrNull())
 }

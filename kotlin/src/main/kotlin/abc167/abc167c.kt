@@ -25,7 +25,7 @@ fun abc167c() {
     if (pattern.isEmpty()) {
         println("-1")
     } else {
-        val min = pattern.minBy { it.cost }
+        val min = pattern.minByOrNull { it.cost }
         println(min!!.cost)
     }
 }

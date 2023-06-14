@@ -17,5 +17,5 @@ fun abc280d() {
         i++
     }
     if (fac != 1L) list.add(fac)
-    println(list.max())
+    println(list.maxOrNull())
 }
