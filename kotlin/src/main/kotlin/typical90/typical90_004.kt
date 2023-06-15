@@ -15,7 +15,6 @@ fun typical90_004() {
         }
     }
     for (c in 0 until h) {
-
-        println(table[c].zip(row).map { it.second - it.first }.map { it + column[c] }.joinToString(" "))
+        println(row.mapIndexed { i, v -> v + column[c] - table[c][i] }.joinToString(" "))
     }
 }
