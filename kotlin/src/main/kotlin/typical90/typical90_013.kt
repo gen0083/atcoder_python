@@ -1,4 +1,4 @@
-import java.lang.Integer.min
+import java.util.*
 
 fun main() {
     typical90_013()
@@ -6,21 +6,33 @@ fun main() {
 
 fun typical90_013() {
     val (n, m) = readLine()!!.split(" ").map { it.toInt() }
-    val roads = mutableListOf<Road>()
+    val roads = List(n + 1) { mutableListOf<Road>() }
     repeat(m) {
         val (a, b, c) = readLine()!!.split(" ").map { it.toInt() }
-        roads.add(Road(a, b, c))
+        roads[a].add(Road(a, b, c))
+        roads[b].add(Road(b, a, c))
     }
-    val to = IntArray(n + 1) { Int.MAX_VALUE }
-    val from = IntArray(n + 1) { Int.MAX_VALUE }
-    to[1] = 0
-    from[n] = 0
-    for (r in roads) {
-        to[r.to] = min(to[r.to], to[r.from] + r.cost)
-    }
-    for (i in m - 1 downTo 0) {
-        val r = roads[i]
-        from[r.from] = min(from[r.from], from[r.to] + r.cost)
+    val to = IntArray(n + 1) { 0 }
+    val from = IntArray(n + 1) { 0 }
+    val next = PriorityQueue<Road> { t1, t2 -> t1.cost - t2.cost }
+    val visited = mutableSetOf<Int>()
+    for (i in listOf(1, n)) {
+        visited.add(i)
+        for (r in roads[i]) {
+            next.add(r)
+        }
+        while (visited.size < n) {
+            val r = next.poll()
+            if (r.to in visited) continue
+            visited.add(r.to)
+            if (i == 1) {
+                to[r.to] = to[r.from] + r.cost
+            } else {
+                from[r.to] = from[r.from] + r.cost
+            }
+            for (r in roads[r.to]) next.add(r)
+        }
+        visited.clear()
     }
     repeat(n) {
         println(to[it + 1] + from[it + 1])
