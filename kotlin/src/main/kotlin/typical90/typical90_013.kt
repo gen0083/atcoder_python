@@ -12,27 +12,24 @@ fun typical90_013() {
         roads[a].add(Road(a, b, c))
         roads[b].add(Road(b, a, c))
     }
-    val to = IntArray(n + 1) { 0 }
-    val from = IntArray(n + 1) { 0 }
-    val next = PriorityQueue<Road> { t1, t2 -> t1.cost - t2.cost }
-    val visited = mutableSetOf<Int>()
+    val to = IntArray(n + 1) { Int.MAX_VALUE }
+    val from = IntArray(n + 1) { Int.MAX_VALUE }
+    to[1] = 0
+    from[n] = 0
+    val next = PriorityQueue<Pair<Int, Int>> { t1, t2 -> t2.second - t1.second }
+    var temp: IntArray
     for (i in listOf(1, n)) {
-        visited.add(i)
-        for (r in roads[i]) {
-            next.add(r)
-        }
-        while (visited.size < n) {
-            val r = next.poll()
-            if (r.to in visited) continue
-            visited.add(r.to)
-            if (i == 1) {
-                to[r.to] = to[r.from] + r.cost
-            } else {
-                from[r.to] = from[r.from] + r.cost
+        next.add(0 to i)
+        temp = if (i == 1) to else from
+        while (next.isNotEmpty()) {
+            val (f, t) = next.poll()
+            for (r in roads[t]) {
+                if (temp[r.to] > temp[r.from] + r.cost) {
+                    temp[r.to] = temp[r.from] + r.cost
+                    next.add(t to r.to)
+                }
             }
-            for (r in roads[r.to]) next.add(r)
         }
-        visited.clear()
     }
     repeat(n) {
         println(to[it + 1] + from[it + 1])
