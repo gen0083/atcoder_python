@@ -24,9 +24,9 @@ fun abc308d() {
         val i = stack.size
         for (j in 0 until i) {
             val (column, row) = stack.pollFirst()
+            if (grid[column][row] != template[t]) continue
             if (column to row in visited) continue
             visited.add(column to row)
-            if (grid[column][row] != template[t]) continue
             if (column == h && row == w) {
                 println("Yes")
                 return

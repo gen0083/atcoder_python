@@ -5,7 +5,16 @@ class Abc308dKtTest : TestBase() {
     override val testData: List<TestData> = listOf(
             TestData("2 3\n" +
                     "sns\n" +
-                    "euk\n", "Yes")
+                    "euk\n", "Yes"),
+            TestData("2 2\n" +
+                    "ab\n" +
+                    "cd\n", "No"),
+            TestData("5 7\n" +
+                    "skunsek\n" +
+                    "nukesnu\n" +
+                    "ukeseku\n" +
+                    "nsnnesn\n" +
+                    "uekukku\n", "Yes"),
     )
 
     @ParameterizedTest
