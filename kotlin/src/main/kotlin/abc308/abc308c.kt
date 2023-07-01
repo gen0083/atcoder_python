@@ -6,15 +6,23 @@ fun main() {
 
 fun abc308c() {
     val n = readLine()!!.toInt()
-    val c = mutableListOf<Pair<Int, Double>>()
+    val c = mutableListOf<Coin>()
     repeat(n) {
         val (a, b) = readLine()!!.split(" ").map { it.toLong() }
-        if (a == 0L) {
-            c.add(it + 1 to 0.0)
-        } else {
-            c.add(it + 1 to ((a + b.toDouble()) / a.toDouble()))
+        c.add(Coin(it + 1, a, b))
+    }
+    c.sort()
+    println(c.joinToString(separator = " ") { it.i.toString() })
+}
+
+private data class Coin(val i: Int, val a: Long, val b: Long) : Comparable<Coin> {
+    override fun compareTo(o: Coin): Int {
+        val f2 = o.a * (this.a + this.b)
+        val f1 = this.a * (o.a + o.b)
+        return when {
+            f1 > f2 -> -1
+            f1 == f2 -> 0
+            else -> 1
         }
     }
-    c.sortBy { it.second }
-    println(c.joinToString(separator = " ") { it.first.toString() })
 }
