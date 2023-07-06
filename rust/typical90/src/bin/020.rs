@@ -6,20 +6,13 @@ fn main() {
         b: u64,
         c: u64,
     }
-    let loga = log(a);
-    let logc = log(c);
-    if loga < b * logc {
+    let mut d = 1_u64;
+    for _ in 0..b {
+        d *= c;
+    }
+    if a < d {
         println!("Yes");
     } else {
         println!("No");
     }
-}
-
-fn log(mut x: u64) -> u64 {
-    let mut a = 0;
-    while x > 0 {
-        x = x >> 1;
-        a +=1;
-    }
-    return a - 1;
 }
