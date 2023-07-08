@@ -9,19 +9,13 @@ fn main() {
         s: Chars,
     }
 
-    let mut alpha: HashMap<u8, usize> = HashMap::<u8, usize>::new();
-    let mut i = 0_usize;
-    for a in b'a'..=b'z' {
-        alpha.insert(a, i);
-        i+=1;
-    }
     let mut next = vec![vec![n; 26]; n +1];
-    for (i, c) in s.iter().enumerate().rev() {
-        let a = *alpha.get(&(*c as u8)).unwrap();
+    for i in (0..n).rev() {
+        let a = s[i] as u8 - b'a';
         for j in 0..26 {
             next[i][j] = next[i+1][j];
         }
-        next[i][a] = i;
+        next[i][a as usize] = i;
     }
     let mut ans = String::new();
     let mut u = 0_usize;
