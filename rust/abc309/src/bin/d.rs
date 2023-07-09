@@ -1,6 +1,5 @@
-use std::collections::VecDeque;
-
 use proconio::input;
+use std::collections::VecDeque;
 
 fn main() {
     input! {
@@ -18,35 +17,23 @@ fn main() {
         roads[b].push(a);
     }
     let d1 = traverse(1, &roads);
-    let d2 = traverse(n1+n2, &roads);
+    let d2 = traverse(n1 + n2, &roads);
     println!("{}", d1 + d2 + 1);
 }
 
-// 考え方はあってるんだけど、実装方法が違うのか・・・
-// step数ではなく、startからの最短距離を計算しなければならなかったのが敗因か
-// だいたい近しいんだけど、ダイクストラちっくにstartから各頂点への最短距離を計算しなければならなかった
-fn traverse(start: usize ,roads: &Vec<Vec<usize>>) -> i32 {
-    let mut f = vec![false; roads.len() + 1];
-    let mut d = 0;
+fn traverse(start: usize, roads: &Vec<Vec<usize>>) -> i32 {
+    let mut d = vec![-1; roads.len()];
     let mut next: VecDeque<usize> = VecDeque::new();
     next.push_back(start);
-    f[start] = true;
-    while !next.is_empty() {
-        let c = next.len();
-        let mut is_run = false;
-        for _ in 0..c {
-            let from = next.pop_front().unwrap();
-            for to in roads[from].iter() {
-                if !f[*to] {
-                    next.push_back(*to);
-                    f[*to] = true;
-                    is_run = true;
-                }
+    d[start] = 0;
+    // 空になったらNoneが返ってきてループ終了になる
+    while let Some(from) = next.pop_front() {
+        for &to in roads[from].iter() {
+            if d[to] == -1 {
+                next.push_back(to);
+                d[to] = d[from] + 1;
             }
         }
-        if is_run {
-            d += 1;
-        }
     }
-    return d;
+    return *d.iter().max().unwrap();
 }
