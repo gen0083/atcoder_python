@@ -10,21 +10,21 @@ fn main() {
         b: [i64; q],
     }
     a.sort();
-    for bj in b {
-        match a.binary_search(&bj) {
-            Ok(_) => println!("0"),
-            Err(i) => {
-                let mut ans = 1000000000_i64;
-                if i > a.len() - 1 {
-                    ans = min(ans, (a.last().unwrap() - bj).abs());
-                } else {
-                    match i.checked_sub(1) {
-                        Some(j) => ans = min((a[i] - bj).abs(), (a[j] - bj).abs()),
-                        None => ans = a[i] - bj.abs(),
-                    };
+    'q: for bj in b {
+        let mut left = 0_usize;
+        let mut right = a.len() - 1;
+        while left + 1 < right {
+            let c = (left + right) / 2;
+            match a[c].cmp(&bj) {
+                std::cmp::Ordering::Greater => right = c,
+                std::cmp::Ordering::Less => left = c,
+                std::cmp::Ordering::Equal => {
+                    println!("0");
+                    continue 'q;
                 }
-                println!("{}", ans);
             }
         }
+        let ans = min((a[left] - bj).abs(), (a[right] - bj).abs());
+        println!("{}", ans);
     }
 }
