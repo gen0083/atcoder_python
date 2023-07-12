@@ -1,5 +1,5 @@
 use std::cmp::min;
-
+j
 use proconio::input;
 
 fn main() {
